@@ -15,4 +15,11 @@ module.exports = {
     },
   },
   plugins: [],
+  theme: {
+    extend: {
+      transitionProperty: {
+        'height': 'height',
+      }
+    }
+  }
 };
