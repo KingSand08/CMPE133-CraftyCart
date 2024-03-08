@@ -3,6 +3,7 @@ import { useState } from "react";
 import  Image  from "next/image";
 
 
+
 export default function Nav() {
  
   const [dropdownState, setDropdownState] = useState(false);
@@ -15,7 +16,8 @@ export default function Nav() {
 
   return (
     
-    <nav className=" flex items-center justify-between flex-wrap bg-teal-500 px-3 py-2 lg:py-4">
+    <nav className=" flex items-center justify-between flex-wrap bg-slate-400 px-3 py-2 lg:py-4">
+      
       <div className="flex items-center flex-shrink-0 text-white mr-6">
       <Image 
           src="/cart.svg"
@@ -33,7 +35,7 @@ export default function Nav() {
           <RegistrationButton name="Sign In" link="#login" />  
         }
       
-        <button className=" items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white" onClick={toggleDropdown}>
+        <button className=" items-center px-3 py-2 border rounded text-slate-200 border-slate-400 hover:text-white hover:border-white" onClick={toggleDropdown}>
         <Image 
           src="/menu.svg"
           alt="Menu"
@@ -45,13 +47,15 @@ export default function Nav() {
         </button>
       </span>
       {dropdownState && (
-        <div className=" w-full block flex-grow">
+      
+        <div className=" w-full flex block flex-grow p-2">
           
             <DropdownItem name="Account Settings" link="#account" />
             <DropdownItem name="Saved Lists" link="#user-lists" />
             <DropdownItem name="Help" link="#tutorial" />
           
         </div>
+        
       )}
     </nav>
   
@@ -60,7 +64,7 @@ export default function Nav() {
 
 function DropdownItem( {name, link} ) {
   return (
-    <a href={link} className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+    <a href={link} className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
       {name}
     </a>
   );
@@ -68,7 +72,7 @@ function DropdownItem( {name, link} ) {
 
 function RegistrationButton( {name, link} ) {
   return (
-    <a href={link} className="text-teal-100 border-teal-400 inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-teal-500 hover:bg-white ">
+    <a href={link} className="text-slate-100 border-slate-400 inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-slate-500 hover:bg-white ">
       {name}
     </a>
 
