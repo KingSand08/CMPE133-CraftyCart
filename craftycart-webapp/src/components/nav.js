@@ -5,6 +5,7 @@ import axios from "axios";
 import {useRouter}  from "next/navigation";
 
 
+
 export default function Nav() {
   const router = useRouter();
  
@@ -29,17 +30,25 @@ export default function Nav() {
     "nothing"
   );
   const getUserDetails = async () => {
-    const res = await axios.get('api/users/me');
-    setUserData(res.data.data._id);
+   
+    await axios.get("/api/users/me").then((response) => {
+      console.log(response.data);
+      setUserData(response.data.username);
+    }).catch((error) => {
+      console.log(error.message);
+    });
+    
   }
-  getUserDetails();
+  
+  window.onload = getUserDetails;
+    
 
   return (
     
     <nav className=" flex items-center justify-between flex-wrap bg-slate-400 px-3 py-2 lg:py-4">
       
-      <div className="flex items-center flex-shrink-0 text-white mr-6">
-      <Image 
+      <a href="/" className="flex items-center flex-shrink-0 text-white mr-6">
+        <Image 
           src="/cart.svg"
           alt="CraftyCart logo"
           className="dark:invert w-8 h-8 mr-2"
@@ -48,7 +57,7 @@ export default function Nav() {
           priority 
         />
         <span className="font-semibold text-xl tracking-tight">CraftyCart</span>
-      </div>
+      </a>
       
       <span className="block  space-x-2">
         { userData==="nothing" ? 
@@ -56,8 +65,6 @@ export default function Nav() {
           :
           {userData}
         }
-
-        {userData}
       
         <button className=" items-center px-3 py-2 border rounded text-slate-200 border-slate-400 hover:text-white hover:border-white" onClick={toggleDropdown}>
         <Image 
@@ -105,7 +112,7 @@ function DropdownButton( {name, fn} ) {
 
 function RegistrationButton( {name, link} ) {
   return (
-    <a href={link} className="text-slate-100 border-slate-400 inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-slate-500 hover:bg-white ">
+    <a href={link} className="text-slate-100 border-white inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-slate-500 hover:bg-white ">
       {name}
     </a>
 
