@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
 import  Image  from "next/image";
-
+import axios from "axios";
+import {useRouter}  from "next/navigation";
 
 
 export default function Nav() {
+  const router = useRouter();
  
   const [dropdownState, setDropdownState] = useState(false);
   
@@ -12,7 +14,25 @@ export default function Nav() {
     setDropdownState(!dropdownState);
   }
 
-  var loggedIn = false;
+  const logout = async () => {
+    try {
+      await axios.get("/api/users/logout");
+      router.push('/');
+
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  
+  const [userData, setUserData] = useState(
+    "nothing"
+  );
+  const getUserDetails = async () => {
+    const res = await axios.get('api/users/me');
+    setUserData(res.data.data._id);
+  }
+  getUserDetails();
 
   return (
     
@@ -31,9 +51,13 @@ export default function Nav() {
       </div>
       
       <span className="block  space-x-2">
-        { !loggedIn && 
-          <RegistrationButton name="Sign In" link="#login" />  
+        { userData==="nothing" ? 
+          <RegistrationButton name="Sign In" link="/account/login" />  
+          :
+          {userData}
         }
+
+        {userData}
       
         <button className=" items-center px-3 py-2 border rounded text-slate-200 border-slate-400 hover:text-white hover:border-white" onClick={toggleDropdown}>
         <Image 
@@ -53,6 +77,7 @@ export default function Nav() {
             <DropdownItem name="Account Settings" link="#account" />
             <DropdownItem name="Saved Lists" link="#user-lists" />
             <DropdownItem name="Help" link="#tutorial" />
+            <DropdownButton name="Logout" fn={logout} />
           
         </div>
         
@@ -68,6 +93,14 @@ function DropdownItem( {name, link} ) {
       {name}
     </a>
   );
+}
+
+function DropdownButton( {name, fn} ) {
+  return (
+    <button onClick={fn} className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
+    {name}
+  </button>
+);
 }
 
 function RegistrationButton( {name, link} ) {

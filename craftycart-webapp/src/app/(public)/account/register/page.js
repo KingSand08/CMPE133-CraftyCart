@@ -18,7 +18,7 @@ export default function SignupPage() {
         try {
             console.log("Signing up");
             const response = await axios.post("/api/users/register", user);
-            router.push("/login");
+            router.push("/account/login");
             
         } catch (error) {
             console.log("Signup failed", error.message);
@@ -29,6 +29,10 @@ export default function SignupPage() {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="bg-slate-400 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+                <h1 className="text-lg font-bold text-gray-700"> Create an Account </h1>
+                <hr className="mb-5"/>
+
                 <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
                     Username
                 </label>
@@ -40,7 +44,7 @@ export default function SignupPage() {
                     placeholder="Username"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+                <label htmlFor="email" className="mt-2 block text-gray-700 text-sm font-bold mb-2">
                     Email
                 </label>
                 <input
@@ -51,7 +55,7 @@ export default function SignupPage() {
                     placeholder="Email"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+                <label htmlFor="password" className="mt-2 block text-gray-700 text-sm font-bold mb-2">
                     Password
                 </label>
                 <input
@@ -62,13 +66,14 @@ export default function SignupPage() {
                     placeholder="Password"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
+                
                 <button
                     onClick={onSignup}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className=" mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                     Sign Up
                 </button>
-                <Link href="/login" className="text-center mt-4">
+                <Link href="/account/login" className="ml-2 text-center mt-4">
                     Visit login page
                 </Link>
             </div>
