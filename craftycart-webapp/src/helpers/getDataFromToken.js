@@ -1,11 +1,10 @@
 import jwt from 'jsonwebtoken';
-import Error from 'next/error';
 
 export const getDataFromToken = (request) => {
 
     try {
         // Retrieve the token from the cookies
-        const token = request.cookies.get("token")?.value || '';
+        const token = request.cookies.get("token").value || '';
         console.log(token);
 
         // Verify and decode the token using the secret key
@@ -15,7 +14,7 @@ export const getDataFromToken = (request) => {
         return decodedToken.id;
 
     } catch (error) {
-        throw new Error(error.message)
+        console.log(error.message);
         
     }
 }

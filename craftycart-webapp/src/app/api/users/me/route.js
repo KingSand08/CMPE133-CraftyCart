@@ -1,10 +1,13 @@
-import User from "@/models/userModel";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 import { connect } from "mongoose";
-import {NextResponse}  from "next";
+import User from "@/models/userModel";
+import { NextRequest, NextResponse } from "next/server";
+import React from "react"; // Import React library
+
 
 try {
     connect();
+    console.log("Database connected");
 } catch (error) {  
     console.log(error.message);
 }
