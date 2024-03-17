@@ -40,7 +40,7 @@ export default function Nav() {
     
   }
   
-  window.onload = getUserDetails;
+  //window.onload = getUserDetails;
     
 
   return (
@@ -79,7 +79,7 @@ export default function Nav() {
       </span>
       {dropdownState && (
       
-        <div className=" w-full flex block flex-grow p-2">
+        <div className=" w-full flex  flex-grow p-2">
           
             <DropdownItem name="Account Settings" link="#account" />
             <DropdownItem name="Saved Lists" link="#user-lists" />
@@ -112,7 +112,7 @@ function DropdownButton( {name, fn} ) {
 
 function RegistrationButton( {name, link} ) {
   return (
-    <a href={link} className="text-slate-100 border-white inline-block text-sm px-4 py-2 leading-none border rounded text-white hover:border-transparent hover:text-slate-500 hover:bg-white ">
+    <a href={link} className="text-slate-100 border-white inline-block text-sm px-4 py-2 leading-none border rounded hover:border-transparent hover:text-slate-500 hover:bg-white ">
       {name}
     </a>
 
