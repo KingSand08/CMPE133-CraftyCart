@@ -40,7 +40,7 @@ export default function Nav() {
     
   }
   
-  window.onload = getUserDetails;
+  //window.onload = getUserDetails;
     
 
   return (
@@ -79,7 +79,7 @@ export default function Nav() {
       </span>
       {dropdownState && (
       
-        <div className=" w-full flex block flex-grow p-2">
+        <div className=" w-full flex flex-grow p-2">
           
             <DropdownItem name="Account Settings" link="#account" />
             <DropdownItem name="Saved Lists" link="#user-lists" />
