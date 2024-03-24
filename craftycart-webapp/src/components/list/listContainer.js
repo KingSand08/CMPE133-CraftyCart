@@ -39,7 +39,7 @@ export default function ListContainer () {
         <div>
             <div>
                 {entries.map((entry, index) => {
-                    console.log(entry.id + " rendered");
+                    //console.log(entry.id + " rendered");
                     return (
                         <ListEntry deleteSelf={deleteEntry} key={entry.id} localId={entry.id}/>
                     );
