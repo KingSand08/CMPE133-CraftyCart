@@ -1,11 +1,12 @@
 
+
 import {connect} from "@/helpers/server/dbConfig";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 
 connect();
-// Calls the connect function to establish a connection to the database.
+
 
 export async function GET(request){
     try {

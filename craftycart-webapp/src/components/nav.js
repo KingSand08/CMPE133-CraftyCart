@@ -43,6 +43,7 @@ export default function Nav() {
   useEffect(() => {
     getUserDetails();
   }, []);
+
     
 
   return (
@@ -85,6 +86,7 @@ export default function Nav() {
       {dropdownState && (
       
         <div className=" w-full flex flex-grow p-2">
+
           
             <DropdownItem name="Account Settings" link="#account" />
             <DropdownItem name="Saved Lists" link="#user-lists" />
