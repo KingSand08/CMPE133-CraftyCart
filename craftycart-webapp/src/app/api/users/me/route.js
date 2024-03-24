@@ -1,16 +1,12 @@
-import { getDataFromToken } from "@/helpers/getDataFromToken";
-import { connect } from "mongoose";
+
+
+import {connect} from "@/helpers/server/dbConfig";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
-import React from "react"; // Import React library
+import { getDataFromToken } from "@/helpers/getDataFromToken";
 
+connect();
 
-try {
-    connect();
-    console.log("Database connected");
-} catch (error) {  
-    console.log(error.message);
-}
 
 export async function GET(request){
     try {
@@ -19,14 +15,21 @@ export async function GET(request){
         const userId = await getDataFromToken(request);
 
         // Find the user in the database based on the user ID
-    
-        const user = await User.findOne({_id: userId}).select("-password");
+        const user = await User.findOne({_id: userId}).
+        select("-password");
+        
+
+        if (!user) {
+            return NextResponse.json({error: "User not found"}, {status: 400})
+        }
+
+
         return NextResponse.json({
             message: "User found",
             data: user
-        });
+        })
     } catch (error) {
-        return NextResponse.json({error: error.message}, {status: 400});
+        return NextResponse.json({error: "get request internal error"}, {status: 400})
         
     }
 }

@@ -3,6 +3,7 @@ import { useState } from "react";
 import  Image  from "next/image";
 import axios from "axios";
 import {useRouter}  from "next/navigation";
+import { useEffect } from "react";
 
 
 
@@ -26,21 +27,23 @@ export default function Nav() {
   }
 
   
-  const [userData, setUserData] = useState(
-    "nothing"
-  );
+  const [userData, setUserData] = useState("nothing")
+
   const getUserDetails = async () => {
-   
-    await axios.get("/api/users/me").then((response) => {
-      console.log(response.data);
-      setUserData(response.data.username);
-    }).catch((error) => {
-      console.log(error.message);
-    });
-    
+          
+      try {
+          const res = await axios.get('/api/users/me', { withCredentials: true, responseType: 'json' });
+          setUserData(res.data.data);
+      } catch (error) {
+          console.log(error.message);
+      }
+          
   }
   
-  //window.onload = getUserDetails;
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
     
 
   return (
@@ -59,11 +62,14 @@ export default function Nav() {
         <span className="font-semibold text-xl tracking-tight">CraftyCart</span>
       </a>
       
+      
+
       <span className="block  space-x-2">
         { userData==="nothing" ? 
           <RegistrationButton name="Sign In" link="/account/login" />  
           :
-          {userData}
+          <UserName name={userData.username} />     
+          
         }
       
         <button className=" items-center px-3 py-2 border rounded text-slate-200 border-slate-400 hover:text-white hover:border-white" onClick={toggleDropdown}>
@@ -79,7 +85,8 @@ export default function Nav() {
       </span>
       {dropdownState && (
       
-        <div className=" w-full flex  flex-grow p-2">
+        <div className=" w-full flex flex-grow p-2">
+
           
             <DropdownItem name="Account Settings" link="#account" />
             <DropdownItem name="Saved Lists" link="#user-lists" />
@@ -116,5 +123,13 @@ function RegistrationButton( {name, link} ) {
       {name}
     </a>
 
+  );
+}
+
+function UserName( {name} ) {
+  return (
+    <a href="/account-settings" className="text-slate-100 inline-block text-lg px-1 py-1 leading-none">
+      {name}
+    </a>
   );
 }
