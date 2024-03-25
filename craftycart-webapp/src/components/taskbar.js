@@ -52,6 +52,8 @@ export default function TaskBar() {
         <div className="fixed bottom-0 left-0 w-screen h-16 
                         flex flex-row items-center justify-around
                         bg-slate-400 text-white">
+                <TaskButton fn={buttonClicked} text="Saved Lists" imageAddr="/cart.svg" imageAlt="saved lists" />
+                <TaskButton fn={buttonClicked} text="New List" imageAddr="/newList.svg" imageAlt="new list" />
             <div>
                 <TaskButton fn={toggleMenu} text="Menu" imageAddr="/menu.svg" imageAlt="menu" />
                 <div className={`absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
@@ -76,9 +78,6 @@ export default function TaskBar() {
                     </ul>
                 </div>
             </div>
-            <TaskButton fn={buttonClicked} text="Saved Lists" imageAddr="/folder.svg" imageAlt="saved lists" />
-            <TaskButton fn={buttonClicked} text="New List" imageAddr="/newList.svg" imageAlt="new list" />
-    
          
             
         </div>
