@@ -2,12 +2,16 @@
 import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useCookies } from "next-client-cookies";
 
-export default function TaskBar() {
+export default function TaskBar(  ) {
 
-    const router = useRouter();
+    const router = useRouter();    
+    const cookies = useCookies();
+    
+    const [userfound, setUserFound] = useState(false);
 
     const [menuState, setMenuState] = useState(false);
     const toggleMenu = () => {
@@ -22,7 +26,7 @@ export default function TaskBar() {
         try {
           
           await axios.get("/api/users/logout");
-          router.push('/');
+          window.location.reload();
     
         } catch (error) {
           console.log(error.message);
@@ -35,17 +39,30 @@ export default function TaskBar() {
     const getUserDetails = async () => {
             
         try {
-            const res = await axios.get('/api/users/me', { withCredentials: true, responseType: 'json' });
-            setUserData(res.data.data);
+            
+                const res = await axios.get('/api/users/me', { withCredentials: true, responseType: 'json' });
+                setUserData(res.data.data);
+            
+                
         } catch (error) {
-            console.log(error.message);
+            
+            setUserData("nothing");
         }
             
     }
     
-    useEffect(() => {
-        getUserDetails();
-    }, []);
+    async function newList() {
+        const response = await axios.get('/api/lists/new-list');
+        console.log(response.data.message);
+        window.location.reload();
+    }
+
+    useEffect( () => {
+        if (!userfound) {
+            getUserDetails();
+            setUserFound(true);
+        }
+    });
 
 
     return (
@@ -53,12 +70,12 @@ export default function TaskBar() {
                         flex flex-row items-center justify-around
                         bg-[color:var(--dark-green)] text-white">
                 <TaskButton fn={buttonClicked} text="Saved Lists" imageAddr="/cart.svg" imageAlt="saved lists" />
-                <TaskButton fn={buttonClicked} text="New List" imageAddr="/newList.svg" imageAlt="new list" />
+                <TaskButton fn={newList} text="New List" imageAddr="/newList.svg" imageAlt="new list" />
             <div>
                 <TaskButton fn={toggleMenu} text="Menu" imageAddr="/menu.svg" imageAlt="menu" />
                 <div className={`absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
                             rounded-md shadow-lg
-                            text-white
+                            text-white bg-green-800
                             text-xl font-bold
                             transition-all duration-100 scale-0 origin-bottom
                             ${menuState ? 'scale-100' : ''}`}>
@@ -74,7 +91,10 @@ export default function TaskBar() {
                             } text={userData.username}
                             onHover="Account Settings" />
                         }
-                        <MenuButton fn={logout} text="Log out"/>
+                        { userData !== "nothing" ? 
+                            <MenuButton fn={logout} text="Log out"/> :
+                            <></>
+                        }
                     </ul>
                 </div>
             </div>

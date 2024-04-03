@@ -14,15 +14,22 @@ export async function GET(request){
 // Defines an asynchronous POST request handler.
     try {
         const userId = getDataFromToken(request);
-
-        let currentShoppingList = null;
-        const activeListId = await User.findOne({_id: userId}).activeList;
-        if (!activeListId) {
-            currentShoppingList = await ShoppingList.findOne({ownerId: userId});
-        } else {
-            currentShoppingList = await ShoppingList.findOne({_id: activeListId});
+        let logged = false;
+        if (request.cookies.get("token") !== undefined) {
+            logged = true;
         }
 
+        let currentShoppingList = null;
+       
+        if (logged ) {
+            const user = await User.findOne({_id: userId});
+            const activeListId = user.activeList;
+            currentShoppingList = await ShoppingList.findOne({_id: activeListId});
+        } else {
+            currentShoppingList = await ShoppingList.findOne({ownerId: userId});
+        }
+        
+       
         console.log(currentShoppingList);
 
         const response = NextResponse.json({
@@ -30,7 +37,7 @@ export async function GET(request){
             success: true,
             currentShoppingList
         });
-
+        return response;
 
     } catch (error) {
         return NextResponse.json({error: error.message}, {status: 500});

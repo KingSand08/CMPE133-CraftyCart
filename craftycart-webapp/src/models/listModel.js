@@ -14,6 +14,10 @@ const listSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    name: {
+        type: String,
+        default: "Shopping List",
+    },
 })
 
 const ShoppingList = mongoose.models.lists || mongoose.model("lists", listSchema);

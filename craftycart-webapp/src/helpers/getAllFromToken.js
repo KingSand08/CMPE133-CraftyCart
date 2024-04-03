@@ -1,9 +1,13 @@
 import jwt from 'jsonwebtoken';
 
 
-export const getAllFromToken = (request) => {
+export const getDataFromToken = (request) => {
 
       
+        if (!request.cookies.get("token")) {
+            return jwt.verify(request.cookies.get("tempToken")?.value, process.env.TOKEN_SECRET).id;
+        }
+
         // Retrieve the token from the cookies
         const token = request.cookies.get("token")?.value || '';
 
@@ -15,7 +19,7 @@ export const getAllFromToken = (request) => {
         
 
         // Return the user ID from the decoded token
-        return decodedToken.id;
+        return decodedToken;
 
 
 }
