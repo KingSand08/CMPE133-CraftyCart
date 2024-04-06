@@ -22,7 +22,12 @@ const entrySchema = new mongoose.Schema({
     },
     linked: {
         type: [{type: mongoose.Schema.Types.ObjectId, ref: "items"}]
-    }
+    },
+    creationDate: {
+        type: Date,
+        required: [true],
+        default: Date.now,
+    },
 })
 
 const ListEntry = mongoose.models.listEntries || mongoose.model("listEntries", entrySchema);

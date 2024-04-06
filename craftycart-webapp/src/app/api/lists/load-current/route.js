@@ -30,7 +30,7 @@ export async function GET(request){
         }
         
        
-        console.log(currentShoppingList);
+        //console.log(currentShoppingList);
 
         const response = NextResponse.json({
             message: "List loaded successfully",

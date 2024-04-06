@@ -4,12 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useCookies } from "next-client-cookies";
+
 
 export default function TaskBar(  ) {
 
     const router = useRouter();    
-    const cookies = useCookies();
+
     
     const [userfound, setUserFound] = useState(false);
 
@@ -62,7 +62,7 @@ export default function TaskBar(  ) {
             getUserDetails();
             setUserFound(true);
         }
-    });
+    }, []);
 
 
     return (

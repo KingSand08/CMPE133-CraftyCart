@@ -2,32 +2,51 @@
 import Image from "next/image";
 import SearchBar from "../searchbar";
 import ListEntry from "./listEntry";
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useState, componenetDidMount } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Spinner from "../spinner";
 
 
 export default function ListContainer ( ) {
+    const [fetching, setFetching] = useState(false);
     const [isLoading, setLoading] = useState(true);
-    const [nextId, setNextId] = useState(1);
-    const [entries, setEntries] = useState([
-        {
-            id: 0,
-            text: '',
-            completed: false,
-        }
-    ]);
-    const [listId, setListId] = useState(0);
+    const [nextId, setNextId] = useState(0);
+    const [entries, setEntries] = useState([]);
     const router = useRouter();
-    const [needNewList, setNeedNewList] = useState(false);
+    const [currentList, setList] = useState(null);
 
-    const addEntry = (itemName='') => {
+    useEffect(() => {
+        
+        loadList();
+        
+    }, []);
+
+
+    const addEntry = (itemName='', brandName='', quantity=1) => {
+        addEntryLocal(itemName, brandName, quantity);
+        //console.log(entries);
+
+        const putData = {
+            listId: currentList._id,
+            entries: entries,
+        }
+
+        axios.put('/api/lists/update-entries', putData).then((response) => {
+            if (response.data.success) {
+                console.log("Entries updated");
+            }
+        });
+    }
+    const addEntryLocal = (itemName='', brandName='', quantity=1) => {
         setNextId(nextId + 1);
         console.log(itemName)
         const newEntry = {
             id: nextId,
+            dbid: null,
             text: itemName,
+            brand: brandName,
+            quantity: quantity,
             completed: false,
         }
         
@@ -54,20 +73,57 @@ export default function ListContainer ( ) {
             await axios.get('/api/lists/new-list');
             response = await axios.get('/api/lists/load-current');
         } 
-        setListId(response.data.currentShoppingList._id);
+        
+        const listId =  response.data.currentShoppingList;
+        const responseEntries = await axios.post('/api/lists/load-entries', {listId: listId});
+        console.log(responseEntries.data);
+        
+        let id = 0;
+
+        const newEntries = [];
+        responseEntries.data.entries.forEach((entry) => {
+            
+            //console.log(id);
+            newEntries.push({
+                id: id,
+                dbId: entry._id,
+                text: entry.itemText,
+                brand: entry.brandText,
+                quantity: entry.quantity,
+                checked: entry.checked,
+                completed: false,
+            });
+            id++;
+        });
+
+        
+        setEntries(newEntries);
+        
+        // newEntries.data.entries.forEach((entry) => {
+        //     addEntryLocal(entry.itemText, entry.brandText, entry.quantity);
+        // });
+
         setLoading(false);
+        console.log("List loaded, nextId = " + id);
+       
+        setNextId(id);
+
+        setList(listId);
         
          
     }
 
-    useEffect(() => {
-        loadList ();
-    }, []);
+    function clearAll() {
+        setEntries([]);
+    }
 
     return (
         <div className="bg-[color:var(--bg-white)]">
-            <SearchBar addEntry={addEntry}/>
+            <SearchBar addEntry={addEntry} clear={clearAll}/>
             
+            
+            {/* <button onClick={() => console.log(entries)}>Log Entries</button>
+             */}
             <div>
                 {entries.map((entry, index) => {
                     //console.log(entry.id + " rendered");
@@ -80,9 +136,23 @@ export default function ListContainer ( ) {
                         />
                     );
                 })}
+
+                 
             </div>
+            {
+                entries.length === 0 &&
+                <button className="opacity-75 w-full" onClick={() => addEntry()}>
+                    <ListEntry
+                        deleteSelf={()=>{return null}}
+                        localId={-1}
+                        entryInfo={{text: "New Item...", brand: "", quantity: 0, checked: false, completed: false, template: true}}
+                    />
+                </button>
+            } 
+           
+
             {isLoading ? <Spinner /> : null }
-            
+            <div className="h-20 bg-transparent"></div>
 
             {/* Replaced by search bar:
             <div className="flex align-center">

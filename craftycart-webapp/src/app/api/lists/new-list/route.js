@@ -48,7 +48,7 @@ export async function GET(request){
             logged = true;
         }
         
-        console.log(userId, logged);
+        //console.log(userId, logged);
        
         if (!logged) {
             console.log("Deleting guest's lists");
@@ -76,7 +76,7 @@ export async function GET(request){
             await user.save();
 
             let numLists = ShoppingList.countDocuments({ownerId: userId});
-            console.log(numLists);
+            //e.log(numLists);
 
             clearExtraLists(userId);
         }
