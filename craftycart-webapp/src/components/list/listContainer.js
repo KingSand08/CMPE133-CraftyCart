@@ -1,14 +1,12 @@
 "use client";
 import Image from "next/image";
+import SearchBar from "../searchbar";
 import ListEntry from "./listEntry";
 import { useState } from "react";
 
 
 export default function ListContainer () {
-
     const [nextId, setNextId] = useState(1);
-    
-
     const [entries, setEntries] = useState([
         {
             id: 0,
@@ -17,11 +15,12 @@ export default function ListContainer () {
         }
     ]);
 
-    const addEntry =  () => {
+    const addEntry = (itemName='') => {
         setNextId(nextId + 1);
+        console.log(itemName)
         const newEntry = {
             id: nextId,
-            text: '',
+            text: itemName,
             completed: false,
         }
         
@@ -36,15 +35,22 @@ export default function ListContainer () {
     }
 
     return (
-        <div>
+        <div className="bg-[color:var(--bg-white)]">
+            <SearchBar addEntry={addEntry}/>
             <div>
                 {entries.map((entry, index) => {
                     //console.log(entry.id + " rendered");
                     return (
-                        <ListEntry deleteSelf={deleteEntry} key={entry.id} localId={entry.id}/>
+                        <ListEntry 
+                            deleteSelf={deleteEntry} 
+                            key={entry.id} 
+                            localId={entry.id}
+                            entryInfo={entry}
+                        />
                     );
                 })}
             </div>
+            {/* Replaced by search bar:
             <div className="flex align-center">
                 <button onClick={addEntry} className="mx-auto">
                     <Image 
@@ -63,7 +69,7 @@ export default function ListContainer () {
                     // add button on the screen 
                     // when you reach the bottom
                 }
-            </div>
+            </div> */}
         </div>
         
         
