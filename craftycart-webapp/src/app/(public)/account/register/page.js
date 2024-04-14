@@ -25,14 +25,13 @@ export default function SignupPage() {
         }
     }
 
-    function loginRedirect() {
-        window.location = "/account/login";
-         }    
+    function redirect(link) {
+        window.location = link;
+      }    
 
     const inputCSS = "shadow border rounded w-full py-2 px-3 text-bg-[color:var(--dark-green)] leading-tight focus:shadow-outline focus:ring-2 focus:ring-green-300 focus:border-green-300 focus:bg-green-100"
     return (
         <div className="flex justify-center items-center w-screen">
-            {/* <div className="bg-slate-400 shadow-md rounded px-8 pt-6 pb-8 mb-4"> */}
             <div className = "bg-green-600 shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
 
@@ -73,17 +72,6 @@ export default function SignupPage() {
                     className={inputCSS}
                     />
                 
-                {/* <button
-                    onClick={onSignup}
-                    className=" mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                    Sign Up
-                </button> */}
-                
-                {/* <Link href="/account/login" className="ml-2 text-center mt-4">
-                    Visit login page
-                </Link> */}
-                
                 <div className="grid grid-cols-2 gap-4 content-center mt-5">
                 <button 
                     className="bg-white hover:bg-green-200 text-green-800 font-bold py-2 px-4 rounded focus:shadow-outline"
@@ -91,19 +79,9 @@ export default function SignupPage() {
                 >
                     Sign Up
                 </button>
-
-                {/* <Link href="/account/register" className="ml-2 text-center mt-4">
-                        Create a new account
-                </Link> */}
-
-                {/* <Link href="/account/register" className="text-center font-bold text-slate-50">
-                    <div className="text-center font-bold py-2 px-4 rounded focus:shadow-outline text-white hover:text-green-800 hover:bg-green-200">
-                            Create a new account
-                    </div>
-                </Link> */}
-
+                
                 <button
-                onClick={() => {loginRedirect()}}
+                onClick={() => {redirect("/account/login")}}
                 className="w-[234.16px] font-bold py-2 px-4 rounded focus:shadow-outline text-white hover:bg-green-200 hover:text-green-800">
                         <span className="my-2 mx-4 rounded focus:shadow-outline hover:text-green-800">
                             Login

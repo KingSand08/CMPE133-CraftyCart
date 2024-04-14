@@ -30,60 +30,11 @@ export default function LoginPage() {
 
   const inputCSS = "shadow border rounded w-full py-2 px-3 text-bg-[color:var(--dark-green)] leading-tight focus:shadow-outline focus:ring-2 focus:ring-green-300 focus:border-green-300 focus:bg-green-100"
 
-  function createAccountRedirect() {
-    window.location = "/account/register";
-     }
-    
+   function redirect(link) {
+    window.location = link;
+  }
+
 return (
-    // <div className="flex justify-center items-center w-screen">
-    //         <div className = "bg-slate-400 shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-36">
-    //             <h1 className="text-lg font-bold text-gray-700"> {loading ? "Processing" : "Login" }</h1>
-    //             <hr className="mb-5" />
-
-    //             <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-    //             <input 
-    //                 id="email"
-    //                 type="text"
-    //                 value = {user.email}
-    //                 onChange={(e) => setUser({ ...user, email: e.target.value})}
-    //                 placeholder="email"
-    //                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-
-    //             />
-
-    //             <label htmlFor="password" className=" mt-2 block text-gray-700 text-sm font-bold mb-2">Password</label>
-    //             <input
-    //                 id="password"
-    //                 type="password"
-    //                 value = {user.password}
-    //                 onChange={(e) => setUser({ ...user, password: e.target.value})}
-    //                 placeholder="password"
-    //                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-
-    //             />
-    //             <div
-    //             className="grid grid-cols-2 gap-4 content-center mt-5">
-    //                 <button 
-    //                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:shadow-outline"
-    //                     onClick={onLogin}
-    //                     tabIndex={0}
-    //                 >
-    //                     Login
-    //                 </button>
-
-    //                 {/* <Link href="/account/register" className="ml-2 text-center mt-4">
-    //                         Create a new account
-    //                 </Link> */}
-                    
-    //                 <div className="hover:bg-slate-600 text-white font-bold py-2 px-4 rounded focus:shadow-outline">
-    //                         <Link href="/account/register" className="ml-2 text-center mt-4 font-bold text-slate-50">
-    //                             Create a new account
-    //                         </Link>
-    //                 </div>
-    //             </div>
-    //         </div>
-    // </div>
-
     <div className="flex justify-center items-center w-screen">
     <div className = "bg-green-600 shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <h1 className="text-lg font-bold text-white"> {loading ? "Processing..." : "Login" }</h1>
@@ -130,7 +81,7 @@ return (
             </Link> */}
 
             <button
-                onClick={() => {createAccountRedirect()}}
+                onClick={() => {redirect("/account/register")}}
                 className="w-[234.16px] font-bold py-2 px-4 rounded focus:shadow-outline text-white hover:bg-green-200 hover:text-green-800"
                 >
                     <div className="mx-4 rounded focus:shadow-outline hover:text-green-800" tabindex="-1">

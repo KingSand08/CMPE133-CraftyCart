@@ -16,11 +16,10 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <div className="flex flex-col space-y-24">
           <Nav />
-
-         <TaskBar />
-        
-          {children}
-
+          <div className="m-2 mr-6 ml-6">
+            {children}
+          </div>
+          <TaskBar />
         </div>
       </body>
     </html>
