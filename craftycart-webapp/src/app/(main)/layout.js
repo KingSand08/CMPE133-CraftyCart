@@ -14,11 +14,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        
-        <TaskBar />
-        
-        {children}
+        <div className="flex flex-col space-y-24">
+          <Nav />
 
+         <TaskBar />
+        
+          {children}
+
+        </div>
       </body>
     </html>
   );

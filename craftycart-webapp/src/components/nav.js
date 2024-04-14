@@ -5,7 +5,7 @@ import axios from "axios";
 import {useRouter}  from "next/navigation";
 import { useEffect } from "react";
 
-
+const dropDownItemCSS = "lg:inline-block text-white hover:text-green-200 mr-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:[text-shadow:_0_1px_0_rgb(0_0_0_/_30%)]";
 
 export default function Nav() {
   const router = useRouter();
@@ -26,7 +26,10 @@ export default function Nav() {
     }
   }
 
-  
+  function redirect(link) {
+    window.location = link;
+  }
+
   const [userData, setUserData] = useState("nothing")
 
   const getUserDetails = async () => {
@@ -44,13 +47,15 @@ export default function Nav() {
     getUserDetails();
   }, []);
 
-    
+  const [menuClick, setMenuClick] = useState(false)
+
 
   return (
     
-    <nav className=" flex items-center justify-between flex-wrap bg-slate-400 px-3 py-2 lg:py-4">
-      
-      <a href="/" className="flex items-center flex-shrink-0 text-white mr-6">
+    // <nav className=" flex items-center justify-between flex-wrap bg-slate-400 px-8 py-8 lg:py-4 w-screen h-20 ">
+    <nav className="fixed w-screen h-20 flex flex-row content-stretch items-center justify-around bg-[color:var(--dark-green)] text-white">
+
+      <a href="/" className="flex items-center flex-shrink-0 text-white mr-6 ml-10 mr-auto pr-6">
         <Image 
           src="/cart.svg"
           alt="CraftyCart logo"
@@ -64,54 +69,55 @@ export default function Nav() {
       
       
 
-      <span className="block  space-x-2">
+      <div className="flex flex-column space-x-2 ml-0 mr-10 text-base align">
         { userData==="nothing" ? 
           <RegistrationButton name="Sign In" link="/account/login" />  
           :
           <UserName name={userData.username} />     
-          
         }
       
-        <button className=" items-center px-3 py-2 border rounded text-slate-200 border-slate-400 hover:text-white hover:border-white" onClick={toggleDropdown}>
-        <Image 
-          src="/menu.svg"
-          alt="Menu"
-          className="invert h-3 w-3"
-          width={30}
-          height={30}
-          priority 
-        />
+        <button className="items-center px-3 py-2 border rounded border-white hover:border-transparent hover:bg-white" onClick={toggleDropdown} onMouseEnter={() => setMenuClick(true)}
+        onMouseLeave={() => setMenuClick(false)}>
+        {menuClick === false &&
+        <svg height="18" width="20" xmlns="http://www.w3.org/2000/svg" className="fill-white">
+          <title>Menu</title>
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+        </svg>
+        }
+        {menuClick === true &&
+          <svg height="18" width="20" xmlns="http://www.w3.org/2000/svg" className="fill-[color:var(--dark-green)]">
+            <g fill="">
+            <title>Menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+            </g>
+          </svg>
+        }
         </button>
-      </span>
       {dropdownState && (
-      
-        <div className=" w-full flex flex-grow p-2">
-
+        // <div className=" w-full flex flex-grow p-2">
+        <div className="flex flex-grow pl-2 rounded bg-[color:var(--faded-green)]">
           
-            <DropdownItem name="Account Settings" link="#account" />
+            {/* <DropdownItem name="Account Settings" link="#account" />
             <DropdownItem name="Saved Lists" link="#user-lists" />
-            <DropdownItem name="Help" link="#tutorial" />
+            <DropdownItem name="Help" link="#tutorial" /> */}
+            <DropdownButton name="Account Settings" fn={() => redirect("#account")} />
+            <DropdownButton name="Saved Lists" fn={() => redirect("#user-lists")} />
+            <DropdownButton name="Help" fn={() => redirect("#tutorial")} />
             <DropdownButton name="Logout" fn={logout} />
           
         </div>
         
       )}
+            </div>
+
     </nav>
   
   );
 }
 
-function DropdownItem( {name, link} ) {
-  return (
-    <a href={link} className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
-      {name}
-    </a>
-  );
-}
-
 function DropdownButton( {name, fn} ) {
   return (
-    <button onClick={fn} className="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">
+    <button onClick={fn} className={dropDownItemCSS}>
     {name}
   </button>
 );
@@ -119,7 +125,7 @@ function DropdownButton( {name, fn} ) {
 
 function RegistrationButton( {name, link} ) {
   return (
-    <a href={link} className="text-slate-100 border-white inline-block text-sm px-4 py-2 leading-none border rounded hover:border-transparent hover:text-slate-500 hover:bg-white ">
+    <a href={link} className="text-white border-white inline-block text-base px-4 py-2 leading-none border rounded hover:border-transparent hover:[color:var(--dark-green)] hover:bg-white">
       {name}
     </a>
 

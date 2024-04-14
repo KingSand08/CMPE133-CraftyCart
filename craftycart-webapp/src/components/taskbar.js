@@ -52,7 +52,7 @@ export default function TaskBar() {
         <div className="fixed bottom-0 left-0 w-screen h-16 
                         flex flex-row items-center justify-around
                         bg-[color:var(--dark-green)] text-white">
-                <TaskButton fn={buttonClicked} text="Saved Lists" imageAddr="/cart.svg" imageAlt="saved lists" />
+                <TaskButton fn={buttonClicked} text="Saved Lists" imageAddr="/favorites.svg" imageAlt="saved lists" />
                 <TaskButton fn={buttonClicked} text="New List" imageAddr="/newList.svg" imageAlt="new list" />
             <div>
                 <TaskButton fn={toggleMenu} text="Menu" imageAddr="/menu.svg" imageAlt="menu" />
@@ -84,17 +84,10 @@ export default function TaskBar() {
     );
 }
 
+// EDIT: Switched the alt text from appearing above of to now appearing to right of the image.
 function TaskButton( {fn, text = 'tooltip', imageAddr, imageAlt} ) {
     return (
         <button onClick={fn} className="group">
-            <div className="hidden lg:block absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
-                            rounded-md shadow-md
-                            text-white bg-gray-800
-                            text-xs font-bold
-                            transition-all duration-100 scale-0 origin-bottom
-                            group-hover:scale-100">
-                {text}
-            </div>
 
             <Image 
                 src={imageAddr}
@@ -104,10 +97,40 @@ function TaskButton( {fn, text = 'tooltip', imageAddr, imageAlt} ) {
                 height={48}
                 priority 
             />
-            
-           
+
+            {/* TO ABOVE OF THE IMAGE */}
+            {/* <div className="hidden lg:block absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
+                            rounded-md shadow-md
+                            text-white bg-gray-800
+                            text-xs font-bold
+                            transition-all duration-100 scale-0 origin-bottom
+                            group-hover:scale-100">
+                {text}
+            </div> */}
+
+
+            {/* TO THE LEFT OF THE IMAGE */}
+            <div className="hidden lg:block absolute w-auto p-2 mx-auto min-w-max top-3.5 translate-x-12
+                            rounded-md shadow-md
+                            text-white bg-gray-800
+                            text-xs font-bold
+                            transition-all duration-100 scale-0 origin-top
+                            group-hover:scale-100">
+                {text}
+            </div>
+
+            {/* TO OVERLAYING OVER THE IMAGE */}
+            {/* <div className="hidden lg:block absolute w-auto p-2 min-w-max top-3.5
+                            rounded-md shadow-md
+                            text-white bg-gray-800
+                            text-xs font-bold
+                            transition-all duration-100 scale-0 origin-top
+                            group-hover:scale-100">
+                {text}
+            </div> */}
+
+
         </button>
-            
     );
 }
 
@@ -119,7 +142,7 @@ function MenuButton( {fn, text = 'tooltip', onHover=""} ) {
                 onClick={fn} 
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                className="group text-slate-200 hover:text-white hover:bg-slate-500 transition-all rounded-md p-1 my-1 w-full">          
+                className="group text-slate-200 text-zinc-600 hover:text-green-400 hover:bg-slate-500 transition-all rounded-md p-1 my-1 w-full">          
             {onHover !== "" && hovered ? 
             onHover : text}
            

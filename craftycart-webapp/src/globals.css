@@ -5,9 +5,11 @@
 :root {
     --lighter-green: #73DD65;
     --light-green: #5ECC5A;
+    --faded-green: #22bf61;
     --green: #2BB857;
     --dark-green: #0DA74B;
     --black: #374241;
+    --dark-gray: #595959;
     --gray:  hsl(175, 9%, 52%);
     --white: hsl(139, 62%, 97%);
     --bg-white: hsl(139, 62%, 95%);
