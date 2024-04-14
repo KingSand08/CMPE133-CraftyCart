@@ -1,11 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import  Image  from "next/image";
 import axios from "axios";
 import {useRouter}  from "next/navigation";
-import { useEffect } from "react";
 
-const dropDownItemCSS = "lg:inline-block text-white hover:text-green-200 mr-4 [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:[text-shadow:_0_1px_0_rgb(0_0_0_/_30%)]";
+const dropDownItemCSS = "pt-2 pb-2 pl-3 pr-3 w-full	 flex grow lg:inline-block text-white hover:bg-[color:var(--dark-green)] [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:[text-shadow:_0_1px_0_rgb(0_0_0_/_30%)]";
 
 export default function Nav() {
   const router = useRouter();
@@ -31,9 +30,11 @@ export default function Nav() {
   }
 
   const [userData, setUserData] = useState("nothing")
+  const [menuClick, setMenuClick] = useState(false)
+  const [open, setOpen] = useState(false)
+
 
   const getUserDetails = async () => {
-          
       try {
           const res = await axios.get('/api/users/me', { withCredentials: true, responseType: 'json' });
           setUserData(res.data.data);
@@ -46,9 +47,6 @@ export default function Nav() {
   useEffect(() => {
     getUserDetails();
   }, []);
-
-  const [menuClick, setMenuClick] = useState(false)
-
 
   return (
     
@@ -68,51 +66,76 @@ export default function Nav() {
       </a>
       
       
-
-      <div className="flex flex-column space-x-2 ml-0 mr-10 text-base align">
+    <div className=" ">
+      <div className="fixed top-0 right-0 space-x-2 ml-0 mr-10 mt-5 flex flex-row  text-base align">
         { userData==="nothing" ? 
           <RegistrationButton name="Sign In" link="/account/login" />  
           :
           <UserName name={userData.username} />     
         }
-      
-        <button className="items-center px-3 py-2 border rounded border-white hover:border-transparent hover:bg-white" onClick={toggleDropdown} onMouseEnter={() => setMenuClick(true)}
-        onMouseLeave={() => setMenuClick(false)}>
-        {menuClick === false &&
-        <svg height="18" width="20" xmlns="http://www.w3.org/2000/svg" className="fill-white">
-          <title>Menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-        </svg>
-        }
-        {menuClick === true &&
-          <svg height="18" width="20" xmlns="http://www.w3.org/2000/svg" className="fill-[color:var(--dark-green)]">
-            <g fill="">
-            <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-            </g>
-          </svg>
-        }
+      {/* onClick={toggleDropdown} */}
+      {/* onClick={() => setOpen(true)} */}
+        <button 
+          className="items-center px-3 py-2 border rounded border-white hover:border-transparent hover:bg-white"
+          onClick={toggleDropdown}
+          onMouseEnter={() => setMenuClick(true)}
+          onMouseLeave={() => setMenuClick(false)}
+          >
+          {menuClick === false &&
+            <svg height="18" width="20" xmlns="http://www.w3.org/2000/svg" className="fill-white">
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+            </svg>
+            }
+            {menuClick === true &&
+              <svg height="18" width="20" xmlns="http://www.w3.org/2000/svg" className="fill-[color:var(--dark-green)]">
+                <g fill="">
+                <title>Menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+                </g>
+              </svg>
+          }
         </button>
+      </div>
       {dropdownState && (
-        // <div className=" w-full flex flex-grow p-2">
-        <div className="flex flex-grow pl-2 rounded bg-[color:var(--faded-green)]">
-          
-            {/* <DropdownItem name="Account Settings" link="#account" />
-            <DropdownItem name="Saved Lists" link="#user-lists" />
-            <DropdownItem name="Help" link="#tutorial" /> */}
-            <DropdownButton name="Account Settings" fn={() => redirect("#account")} />
-            <DropdownButton name="Saved Lists" fn={() => redirect("#user-lists")} />
-            <DropdownButton name="Help" fn={() => redirect("#tutorial")} />
-            <DropdownButton name="Logout" fn={logout} />
-          
-        </div>
-        
-      )}
-            </div>
-
+      // p-4
+          <div className="relative top-28 right-4 flex flex-col gap-1 text-center	items-center rounded border border-4 border-[color:var(--darker-green)] bg-[color:var(--faded-green)]">
+              <DropdownButton name="Account Settings" fn={() => redirect("#account")} />
+              <DropdownButton name="Saved Lists" fn={() => redirect("#user-lists")} />
+              <DropdownButton name="Help" fn={() => redirect("#tutorial")} />
+              <DropdownButton name="Logout" fn={logout} />
+          </div>
+        )}
+      </div>
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <svg height="18" width="20" xmlns="http://www.w3.org/2000/svg" className="mx-auto fill-red">
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+          </svg>
+        </Modal>
     </nav>
-  
   );
+}
+
+// {dropdownState && (
+//   <div className="flex flex-col pl-2 rounded bg-[color:var(--faded-green)]">
+//       <DropdownButton name="Account Settings" fn={() => redirect("#account")} />
+//       <DropdownButton name="Saved Lists" fn={() => redirect("#user-lists")} />
+//       <DropdownButton name="Help" fn={() => redirect("#tutorial")} />
+//       <DropdownButton name="Logout" fn={logout} />
+//   </div>
+// )}
+
+export function Modal({ open, onClose, children }) {
+  return (
+  // backdrop
+  <div onClick={onClose} className={`
+    fixed inset-0 flex justify-center items-center transition-colors 
+    ${open ? "visible bg-black/20" : "invisible"}`}
+  >
+    {children}
+  </div>
+  )
 }
 
 function DropdownButton( {name, fn} ) {
