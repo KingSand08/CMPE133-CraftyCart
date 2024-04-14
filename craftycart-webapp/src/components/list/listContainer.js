@@ -68,11 +68,12 @@ export default function ListContainer ( ) {
 
     async function loadList() {
         let response = await axios.get('/api/lists/load-current');     
-        console.log(response.data.currentShoppingList);  
-        if (response.data.currentShoppingList === null) {
+         
+        if (response.data.status === 401 || response.data.currentShoppingList === null) {
             await axios.get('/api/lists/new-list');
             response = await axios.get('/api/lists/load-current');
         } 
+        console.log(response.data.currentShoppingList); 
         
         const listId =  response.data.currentShoppingList;
         const responseEntries = await axios.post('/api/lists/load-entries', {listId: listId});

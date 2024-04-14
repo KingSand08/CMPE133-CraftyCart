@@ -13,6 +13,14 @@ connect();
 export async function GET(request){
 // Defines an asynchronous POST request handler.
     try {
+        if (!request.cookies.get("token") && !request.cookies.get("tempToken") ) {
+            return NextResponse.json({
+                message: "Not Logged in",
+                success: false,
+                currentShoppingList: null,
+            });
+        }
+
         const userId = getDataFromToken(request);
         let logged = false;
         if (request.cookies.get("token") !== undefined) {
