@@ -6,15 +6,23 @@ import { use, useEffect, useState, componenetDidMount } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Spinner from "../spinner";
+import {saveList} from "@/helpers/client/saveList";
 
 
 export default function ListContainer ( ) {
-    const [fetching, setFetching] = useState(false);
     const [isLoading, setLoading] = useState(true);
+    // the next id to be assigned to a new entry
     const [nextId, setNextId] = useState(0);
+    // the local list of entries
     const [entries, setEntries] = useState([]);
+
+    // for routing
     const router = useRouter();
+
+    // holds the list object of the currently loaded list
     const [currentList, setList] = useState(null);
+    // holds a list of db ids to be removed on next update
+    const [toDelete, setToDelete] = useState([]);
 
     useEffect(() => {
         
@@ -25,18 +33,6 @@ export default function ListContainer ( ) {
 
     const addEntry = (itemName='', brandName='', quantity=1) => {
         addEntryLocal(itemName, brandName, quantity);
-        //console.log(entries);
-
-        const putData = {
-            listId: currentList._id,
-            entries: entries,
-        }
-
-        axios.put('/api/lists/update-entries', putData).then((response) => {
-            if (response.data.success) {
-                console.log("Entries updated");
-            }
-        });
     }
     const addEntryLocal = (itemName='', brandName='', quantity=1) => {
         setNextId(nextId + 1);
@@ -52,12 +48,18 @@ export default function ListContainer ( ) {
         
         setEntries([...entries, newEntry]);
         console.log(nextId + " added");
+
+
     }
 
     const deleteEntry = (localId) => {
         console.log(localId + " removed");
+        const removed = entries.find(entry => entry.id === localId);
         const newEntries = entries.filter(entry => entry.id !== localId);
         setEntries(newEntries);
+        if (removed.dbId) {
+            setToDelete([...toDelete, removed.dbId]);
+        }
     }
 
     async function newList() {
@@ -123,8 +125,12 @@ export default function ListContainer ( ) {
             <SearchBar addEntry={addEntry} clear={clearAll}/>
             
             
-            {/* <button onClick={() => console.log(entries)}>Log Entries</button>
-             */}
+            <button
+                className="w-full bg-red border-black border-2 p-2"
+                onClick={() => saveList(entries, setEntries, currentList, toDelete, setToDelete)}>
+                    Debug Save All
+            </button>
+             
             <div>
                 {entries.map((entry, index) => {
                     //console.log(entry.id + " rendered");
