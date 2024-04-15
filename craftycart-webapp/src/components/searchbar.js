@@ -22,7 +22,7 @@ export default function SearchBar( {addEntry} ) {
         
             <form 
                 className={`flex flex-row justify-between grow m-2 p-4 box-border rounded-md shadow-md bg-[color:var(--white)] border ${isFocused ? 'border-[color:var(--dark-green)] border-3' : 'border-[color:var(--gray)] border-3'}`}
-                onSubmit={handleSubmit}
+                  onSubmit={handleSubmit}
             > 
             
                 <div className="w-full flex flex-row justify-between">
@@ -42,6 +42,5 @@ export default function SearchBar( {addEntry} ) {
                     </button>
                 </div>
             </form>
-        
     );
 }
