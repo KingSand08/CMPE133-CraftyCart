@@ -99,7 +99,7 @@ export default function Nav() {
       </div>
       
       
-          <div className={`absolute z-40 top-28 right-4 flex flex-col gap-1 text-center	items-center rounded  border-4 border-[color:var(--darker-green)] bg-[color:var(--faded-green)] scale-0 ${dropdownState ? 'scale-100' : ''} transition-all duration-100 origin-top z-auto`}>
+          <div className={`absolute z-40 top-[65px] right-4 flex flex-col gap-1 text-center	items-center rounded  border-4 border-[color:var(--darker-green)] bg-[color:var(--faded-green)] scale-0 ${dropdownState ? 'scale-100' : ''} transition-all duration-100 origin-top z-auto`}>
               <DropdownButton name="Account Settings" fn={() => redirect("#account")} />
               <DropdownButton name="Saved Lists" fn={() => redirect("#user-lists")} />
               <DropdownButton name="Help" fn={() => redirect("#tutorial")} />
