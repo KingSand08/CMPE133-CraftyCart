@@ -1,7 +1,6 @@
 import React from "react"
-import ReactDOM from "reac-dom"
+import ReactDOM from "react-dom"
 // import saved-lists component
-
 export function SavedLists() {
     return (
         <div className="home-contents">

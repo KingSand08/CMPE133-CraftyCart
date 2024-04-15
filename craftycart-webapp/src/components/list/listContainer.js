@@ -35,43 +35,19 @@ export default function ListContainer () {
     }
 
     return (
-        <div className="bg-[color:var(--bg-white)] mb-24">
+        <div className="bg-[color:var(--bg-white)] mb-24">            
             <SearchBar addEntry={addEntry}/>
-            <div className="mt-20">
-                {entries.map((entry, index) => {
-                    //console.log(entry.id + " rendered");
-                    return (
-                        <ListEntry 
-                            deleteSelf={deleteEntry} 
-                            key={entry.id} 
-                            localId={entry.id}
-                            entryInfo={entry}
-                        />
-                    );
-                })}
-            </div>
-            {/* Replaced by search bar:
-            <div className="flex align-center">
-                <button onClick={addEntry} className="mx-auto">
-                    <Image 
-                        src="/plus.svg"
-                        alt="add"
-                        className="invert-color w-20 h-20"
-                        width={200}
-                        height={48}
-                        priority
+            {entries.map((entry, index) => {
+                //console.log(entry.id + " rendered");
+                return (
+                    <ListEntry 
+                        deleteSelf={deleteEntry} 
+                        key={entry.id} 
+                        localId={entry.id}
+                        entryInfo={entry}
                     />
-                </button>
-            </div>
-            <div className="h-16">
-                {
-                    // stupid fix for keeping the 
-                    // add button on the screen 
-                    // when you reach the bottom
-                }
-            </div> */}
+                );
+            })}
         </div>
-        
-        
     );
 }

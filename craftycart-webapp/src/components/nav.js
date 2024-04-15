@@ -97,15 +97,12 @@ export default function Nav() {
           }
         </button>
       </div>
-      {dropdownState && (
-      // p-4
-          <div className="relative top-28 right-4 flex flex-col gap-1 text-center	items-center rounded border border-4 border-[color:var(--darker-green)] bg-[color:var(--faded-green)]">
+          <div className={`absolute z-40 top-[65px] right-4 flex flex-col gap-1 text-center	items-center rounded  border-4 border-[color:var(--darker-green)] bg-[color:var(--faded-green)] scale-0 ${dropdownState ? 'scale-100' : ''} transition-all duration-100 origin-top z-auto`}>
               <DropdownButton name="Account Settings" fn={() => redirect("#account")} />
               <DropdownButton name="Saved Lists" fn={() => redirect("#user-lists")} />
               <DropdownButton name="Help" fn={() => redirect("#tutorial")} />
               <DropdownButton name="Logout" fn={logout} />
           </div>
-        )}
       </div>
         <Modal open={open} onClose={() => setOpen(false)}>
           <svg height="18" width="20" xmlns="http://www.w3.org/2000/svg" className="mx-auto fill-red">
