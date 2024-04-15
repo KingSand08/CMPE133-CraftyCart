@@ -13,6 +13,10 @@ export async function saveList(entries, setEntries, listInfo, toDelete, setToDel
 
     // listInfo is list object of the list that is currently loaded
     // id is db id for the list
+    if (listInfo === null) {
+        console.log("No list loaded");
+        return;
+    }
     const listId = listInfo._id;
 
     const responce  = await axios.put('/api/lists/update-entries', {listId: listId, entries: entries, toDelete: toDelete});

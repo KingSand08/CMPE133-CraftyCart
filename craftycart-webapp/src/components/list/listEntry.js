@@ -11,6 +11,10 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                     id="list-item-name"
                     placeholder="Item name..."
                     defaultValue={(entryInfo) ? entryInfo["text"] : ""}
+                    onChange={(event) => { 
+                        entryInfo.text = event.target.value;
+                        updateEntry(entryInfo, localId);
+                    }}
                     className="text-lg bg-[color:var(--white)] placeholder-[color:var(--black)]"
                 />
 
