@@ -36,20 +36,21 @@ export default function ListContainer () {
 
     return (
         <div className="bg-[color:var(--bg-white)] mb-24">
+            
+           
             <SearchBar addEntry={addEntry}/>
-            <div className="mt-20">
-                {entries.map((entry, index) => {
-                    //console.log(entry.id + " rendered");
-                    return (
-                        <ListEntry 
-                            deleteSelf={deleteEntry} 
-                            key={entry.id} 
-                            localId={entry.id}
-                            entryInfo={entry}
-                        />
-                    );
-                })}
-            </div>
+            {entries.map((entry, index) => {
+                //console.log(entry.id + " rendered");
+                return (
+                    <ListEntry 
+                        deleteSelf={deleteEntry} 
+                        key={entry.id} 
+                        localId={entry.id}
+                        entryInfo={entry}
+                    />
+                );
+            })}
+            
             {/* Replaced by search bar:
             <div className="flex align-center">
                 <button onClick={addEntry} className="mx-auto">

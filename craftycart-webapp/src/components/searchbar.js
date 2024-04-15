@@ -19,9 +19,9 @@ export default function SearchBar( {addEntry} ) {
     // p-4 flex flex-row justify-between grow box-border rounded-md shadow-md bg-[color:var(--white)] border-[color:var(--gray)] border-2"
 
     return (
-        <div className="fixed w-[96.5%] top-24">
+        
             <form 
-                className={`flex flex-row w-full justify-between grow p-4 box-border rounded-md shadow-md bg-[color:var(--white)] border ${isFocused ? 'border-[color:var(--dark-green)] border-2' : 'border-[color:var(--gray)] border-3'}`}
+                className={`flex flex-row justify-between grow m-2 p-4 box-border rounded-md shadow-md bg-[color:var(--white)] border ${isFocused ? 'border-[color:var(--dark-green)] border-3' : 'border-[color:var(--gray)] border-3'}`}
                 onSubmit={handleSubmit}
             > 
             
@@ -42,6 +42,6 @@ export default function SearchBar( {addEntry} ) {
                     </button>
                 </div>
             </form>
-        </div>
+        
     );
 }
