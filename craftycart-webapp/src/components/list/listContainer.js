@@ -35,9 +35,9 @@ export default function ListContainer () {
     }
 
     return (
-        <div className="bg-[color:var(--bg-white)]">
+        <div className="bg-[color:var(--bg-white)] mb-24">
             <SearchBar addEntry={addEntry}/>
-            <div>
+            <div className="mt-20">
                 {entries.map((entry, index) => {
                     //console.log(entry.id + " rendered");
                     return (
