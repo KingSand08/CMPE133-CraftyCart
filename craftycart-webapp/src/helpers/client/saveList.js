@@ -24,11 +24,13 @@ export async function saveList(entries, setEntries, listInfo, toDelete, setToDel
     console.log(responce.data);
 
     const toModify = responce.data.newIDs;
+    let newEntries = [...entries];
     toModify.forEach((pair) => {
-        entries.find(entry => entry.id === pair.localId).dbId = pair.dbId;
+        newEntries.find(entry => entry.id === pair.localId).dbId = pair.dbId;
+        console.log(pair.localId + " local updated to dbid: " + pair.dbId)
     });
 
-    setEntries(entries);
+    setEntries(newEntries);
     setToDelete([]);
       
 

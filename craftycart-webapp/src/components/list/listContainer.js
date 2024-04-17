@@ -1,4 +1,6 @@
+
 "use client";
+
 import Image from "next/image";
 import SearchBar from "../searchbar";
 import ListEntry from "./listEntry";
@@ -40,6 +42,7 @@ export default function ListContainer ( ) {
 
         if (timeLeft === 0) {
             console.log("SAVING...");
+            console.log(entries);
             saveList(entries, setEntries, currentList, toDelete, setToDelete,);
             setTimeLeft(-1);
             return;
@@ -70,7 +73,7 @@ export default function ListContainer ( ) {
         console.log(itemName)
         const newEntry = {
             id: nextId,
-            dbid: null,
+            dbId: null,
             text: itemName,
             brand: brandName,
             quantity: quantity,
@@ -166,7 +169,7 @@ export default function ListContainer ( ) {
         <div className="bg-[color:var(--bg-white)]">
             <SearchBar addEntry={addEntry} clear={clearAll}/>
             
-            {/* {
+            {
                 timeLeft <= 0 &&
                 <div className={`
                     flex justify-center 
@@ -193,7 +196,7 @@ export default function ListContainer ( ) {
                     Saving...
                 </div> 
              
-            } */}
+            } 
             
             {/*
             A button that can be used to manually save the list
@@ -224,7 +227,7 @@ export default function ListContainer ( ) {
             </div>
             {
                 entries.length === 0 &&
-                <button className="opacity-75 w-full" onClick={() => addEntry()}>
+                <button className="opacity-75 w-full" onClick={() => addEntry('New Item', 'Any Brand', quantity=1)}>
                     <ListEntry
                         deleteSelf={()=>{return null}}
                         localId={-1}

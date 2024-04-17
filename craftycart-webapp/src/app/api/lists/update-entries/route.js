@@ -52,13 +52,16 @@ export async function PUT(request){
 
             } else {
                 console.log("updating entry: " + element.text);
-                ListEntry.updateOne({
+                console.log("dbId: " + element.dbId);
+                ListEntry.findOneAndUpdate({
                     _id: element.dbId
                 }, {
                     itemText: element.text,
                     brandText: element.brand,
                     checked: element.checked,
                     quantity: element.quantity,
+                }).catch((error) => {
+                    console.log(error);
                 });
             }
         });
