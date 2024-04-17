@@ -25,15 +25,20 @@ export default function SignupPage() {
         }
     }
 
+    function redirect(link) {
+        window.location = link;
+      }    
 
+    const inputCSS = "shadow border rounded w-full py-2 px-3 text-bg-[color:var(--dark-green)] leading-tight focus:shadow-outline focus:ring-2 focus:ring-green-300 focus:border-green-300 focus:bg-green-100"
     return (
-        <div className="flex justify-center items-center h-screen">
-            <div className="bg-slate-400 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="flex justify-center items-center w-screen">
+            <div className = "bg-green-600 shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
-                <h1 className="text-lg font-bold text-gray-700"> Create an Account </h1>
+
+                <h1 className="text-lg font-bold text-white"> Create an Account </h1>
                 <hr className="mb-5"/>
 
-                <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
+                <label htmlFor="username" className="block text-white text-sm font-bold mb-2">
                     Username
                 </label>
                 <input
@@ -41,10 +46,10 @@ export default function SignupPage() {
                     type="text"
                     value={user.username}
                     onChange={(e) => setUser({ ...user, username: e.target.value })}
-                    placeholder="Username"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                <label htmlFor="email" className="mt-2 block text-gray-700 text-sm font-bold mb-2">
+                    placeholder="username"
+                    className={inputCSS}
+                    />
+                <label htmlFor="email" className="mt-2 block text-white text-sm font-bold mb-2">
                     Email
                 </label>
                 <input
@@ -52,10 +57,10 @@ export default function SignupPage() {
                     type="text"
                     value={user.email}
                     onChange={(e) => setUser({ ...user, email: e.target.value })}
-                    placeholder="Email"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                <label htmlFor="password" className="mt-2 block text-gray-700 text-sm font-bold mb-2">
+                    placeholder="email"
+                    className={inputCSS}
+                    />
+                <label htmlFor="password" className="mt-2 block text-white text-sm font-bold mb-2">
                     Password
                 </label>
                 <input
@@ -63,19 +68,27 @@ export default function SignupPage() {
                     type="password"
                     value={user.password}
                     onChange={(e) => setUser({ ...user, password: e.target.value })}
-                    placeholder="Password"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
+                    placeholder="password"
+                    className={inputCSS}
+                    />
                 
-                <button
+                <div className="grid grid-cols-2 gap-4 content-center mt-5">
+                <button 
+                    className="bg-white hover:bg-green-200 text-green-800 font-bold py-2 px-4 rounded focus:shadow-outline"
                     onClick={onSignup}
-                    className=" mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                     Sign Up
                 </button>
-                <Link href="/account/login" className="ml-2 text-center mt-4">
-                    Visit login page
-                </Link>
+                
+                <button
+                onClick={() => {redirect("/account/login")}}
+                className="w-[234.16px] font-bold py-2 px-4 rounded focus:shadow-outline text-white hover:bg-green-200 hover:text-green-800">
+                        <span className="my-2 mx-4 rounded focus:shadow-outline hover:text-green-800">
+                            Login
+                        </span>
+                </button>
+            </div>
+
             </div>
         </div>
     );

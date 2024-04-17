@@ -17,6 +17,11 @@ export default function SearchBar( {addEntry, clear} ) {
         
     }
 
+    const [isFocused, setIsFocused] = useState(false);
+    const inputCSS = "text-xl bg-[color:var(--white)] placeholder-[color:var(--black)] w-full"
+
+    // p-4 flex flex-row justify-between grow box-border rounded-md shadow-md bg-[color:var(--white)] border-[color:var(--gray)] border-2"
+
     return (
         <div className="flex flex-row ">
         <button onClick={clear} className="w-10 pl-2 flex align-middle justify-center box-border">
@@ -25,10 +30,9 @@ export default function SearchBar( {addEntry, clear} ) {
                     </svg>
         </button>
         <form 
-            className=" m-2 p-4 flex flex-row justify-between grow box-border 
-                rounded-md shadow-md bg-[color:var(--white)] border-[color:var(--gray)] border-2"
-            onSubmit={handleSubmit}
-        >
+                className={`flex flex-row justify-between grow m-2 p-4 box-border rounded-md shadow-md bg-[color:var(--white)] border ${isFocused ? 'border-[color:var(--dark-green)] border-3' : 'border-[color:var(--gray)] border-3'}`}
+                  onSubmit={handleSubmit}
+            > 
             <div className="w-full flex flex-row justify-between">
                 <input
                     type="text"
@@ -38,6 +42,8 @@ export default function SearchBar( {addEntry, clear} ) {
                     value={entryToAdd}
                     onChange={(event) => setEntryToAdd(event.target.value)}
                     className="text-xl bg-[color:var(--white)] placeholder-[color:var(--black)]"
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
                 />
                 <button type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="fill-[color:var(--dark-green)] w-6">

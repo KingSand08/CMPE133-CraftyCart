@@ -166,7 +166,7 @@ export default function ListContainer ( ) {
         <div className="bg-[color:var(--bg-white)]">
             <SearchBar addEntry={addEntry} clear={clearAll}/>
             
-            {/* {
+             {
                 timeLeft <= 0 &&
                 <div className={`
                     flex justify-center 
@@ -193,7 +193,7 @@ export default function ListContainer ( ) {
                     Saving...
                 </div> 
              
-            } */}
+            } 
             
             {/*
             A button that can be used to manually save the list
