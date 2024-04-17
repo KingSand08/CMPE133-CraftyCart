@@ -197,7 +197,7 @@ export default function ListContainer ( ) {
                 </div> 
              
             } 
-            } 
+            
             
             {/*
             A button that can be used to manually save the list
