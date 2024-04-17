@@ -11,18 +11,31 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                     id="list-item-name"
                     placeholder="Item name..."
                     defaultValue={(entryInfo) ? entryInfo["text"] : ""}
+                    onChange={(event) => { 
+                        entryInfo.text = event.target.value;
+                        updateEntry(entryInfo, localId);
+                    }}
                     className="text-lg bg-[color:var(--white)] placeholder-[color:var(--black)]"
                 />
 
+                { !entryInfo["template"] ?
                 <input
                     type="text"
                     name="list-brand-name"
                     id="list-brand-name"
                     placeholder="Any Brand"
+                    defaultValue={(entryInfo) ? entryInfo["brand"] : ""}
                     className="text-xs bg-[color:var(--white)] placeholder-[color:var(--black)]"
                 />
+
+                :
+
+                <div className="text-xs bg-[color:var(--white)] placeholder-[color:var(--black)] h-4">
+                    </div>
+                }
+
             </div>
-            
+            { !entryInfo["template"] &&
             <div className="flex flex-row overflow-hidden whitespace-nowrap">
                 <label className="mr-6 flex flex-row items-center">
                     <input 
@@ -31,6 +44,7 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                         id="list-quantity"
                         min="1" max="99"
                         placeholder="1"
+                        defaultValue={(entryInfo) ? entryInfo["quantity"] : ""}
                         className="w-8 bg-[color:var(--white)] placeholder-[color:var(--black)]  flex flex-row"
                         dir="rtl"
                     />
@@ -43,6 +57,7 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                     </svg>
                 </button>
             </div>
+            }
         </div>
     );
 }

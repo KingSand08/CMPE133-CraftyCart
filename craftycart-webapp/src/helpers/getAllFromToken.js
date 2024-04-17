@@ -19,7 +19,7 @@ export const getDataFromToken = (request) => {
         
 
         // Return the user ID from the decoded token
-        return decodedToken.id;
+        return decodedToken;
 
 
 }

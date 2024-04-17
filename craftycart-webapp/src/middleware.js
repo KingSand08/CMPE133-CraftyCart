@@ -1,5 +1,9 @@
+import { get } from 'mongoose';
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
+import { getAllFromToken } from './helpers/getAllFromToken';
+import { getDataFromToken } from './helpers/getDataFromToken';
+import jwt from 'jsonwebtoken';
 
 export function middleware(request) {
   const path = request.nextUrl.pathname
@@ -13,16 +17,17 @@ export function middleware(request) {
 
   // Get the token from the cookies
   const token = request.cookies.get('token')?.value || ''
+  const loggedIn = token ? true : false;
 
   // Redirect logic based on the path and token presence
-  if(isLoginPath && token) {
+  if(isLoginPath && loggedIn) {
 
  // If trying to access a public path with a token, redirect to the home page
     return NextResponse.redirect(new URL('/', request.nextUrl))
   }
 
 // If trying to access a protected path without a token, redirect to the login page
-  if ( isSecurePath && !token) {
+  if ( isSecurePath && !loggedIn) {
     return NextResponse.redirect(new URL('/account/login', request.nextUrl))
   }
     
