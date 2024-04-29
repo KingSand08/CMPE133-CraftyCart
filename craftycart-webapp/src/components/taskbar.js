@@ -22,16 +22,16 @@ export default function TaskBar(  ) {
         alert("button clicked");
     }
 
-    const logout = async () => {
-        try {
+    // const logout = async () => {
+    //     try {
           
-          await axios.get("/api/users/logout");
-          window.location.reload();
+    //       await axios.get("/api/users/logout");
+    //       window.location.reload();
     
-        } catch (error) {
-          console.log(error.message);
-        }
-    }
+    //     } catch (error) {
+    //       console.log(error.message);
+    //     }
+    // }
        
    
     const [userData, setUserData] = useState("nothing")
@@ -69,11 +69,11 @@ export default function TaskBar(  ) {
         <div className="fixed bottom-0 left-0 w-screen h-16 
                         flex flex-row items-center justify-around
                         bg-[color:var(--dark-green)] text-white">
-                <TaskButton fn={buttonClicked} text="Saved Lists" imageAddr="/favorites.svg" imageAlt="saved lists" />
-                <TaskButton fn={newList} text="View List" imageAddr="/currentList.svg" imageAlt="view list" />
-            <div>
-                <TaskButton fn={toggleMenu} text="Menu" imageAddr="/cart.svg" imageAlt="menu" />
-                <div className={`absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
+                <TaskButton fn={buttonClicked} text="Saved Lists" imageAddr="/favorites.svg" imageAlt="Saved Lists" />
+                <TaskButton fn={newList} text="View List" imageAddr="/currentList.svg" imageAlt="View List" />
+            {/* <div> */}
+                <TaskButton fn={toggleMenu} text="Find Stores" imageAddr="/cart.svg" imageAlt="Find Stores" />
+                {/* <div className={`absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
                             rounded-md shadow-lg
                             text-white bg-green-800
                             text-xl font-bold
@@ -97,7 +97,7 @@ export default function TaskBar(  ) {
                         }
                     </ul>
                 </div>
-            </div>
+            </div> */}
          
             
         </div>
