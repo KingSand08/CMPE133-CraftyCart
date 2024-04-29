@@ -51,7 +51,7 @@ export default function Nav() {
   return (
     
     // <nav className=" flex items-center justify-between flex-wrap bg-slate-400 px-8 py-8 lg:py-4 w-screen h-20 ">
-    <nav className="fixed w-screen h-20 flex flex-row content-stretch items-center justify-around bg-[color:var(--dark-green)] text-white">
+    <nav className="fixed w-screen h-20 flex flex-row content-stretch items-center justify-around bg-[color:var(--dark-green)] text-white z-20">
 
       <a href="/" className="flex items-center flex-shrink-0 text-white mr-6 ml-10 mr-auto pr-6">
         <Image 
@@ -71,7 +71,10 @@ export default function Nav() {
         { userData==="nothing" ? 
           <RegistrationButton name="Sign In" link="/account/login" />  
           :
-          <UserName name={userData.username} />     
+          <>
+          <UserName name={userData.username} />  
+          <LogoutButton name="Logout" fn={logout} />  
+          </>
         }
       {/* onClick={toggleDropdown} */}
       {/* onClick={() => setOpen(true)} */}
@@ -101,7 +104,7 @@ export default function Nav() {
               <DropdownButton name="Account Settings" fn={() => redirect("#account")} />
               <DropdownButton name="Saved Lists" fn={() => redirect("#user-lists")} />
               <DropdownButton name="Help" fn={() => redirect("#tutorial")} />
-              <DropdownButton name="Logout" fn={logout} />
+              {/* <DropdownButton name="Logout" fn={logout} /> */}
           </div>
       </div>
         <Modal open={open} onClose={() => setOpen(false)}>
@@ -151,6 +154,16 @@ function RegistrationButton( {name, link} ) {
 
   );
 }
+
+function LogoutButton( {name, fn} ) {
+  return (
+    <button onClick={fn} className="text-white border-white inline-block text-base px-4 py-2 leading-none border rounded hover:border-transparent hover:[color:var(--dark-green)] hover:bg-white">
+      {name}
+    </button>
+
+  );
+}
+
 
 function UserName( {name} ) {
   return (

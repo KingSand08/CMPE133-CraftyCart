@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           <div className="m-2 mr-6 ml-6">
             {children}
           </div>
-          <TaskBar />
+          <TaskBar className="pt-10"/>
         </div>
       </body>
     </html>
