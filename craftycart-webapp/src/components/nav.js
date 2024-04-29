@@ -51,7 +51,7 @@ export default function Nav() {
   return (
     
     // <nav className=" flex items-center justify-between flex-wrap bg-slate-400 px-8 py-8 lg:py-4 w-screen h-20 ">
-    <nav className="fixed w-screen h-20 flex flex-row content-stretch items-center justify-around bg-[color:var(--dark-green)] text-white">
+    <nav className="fixed w-screen h-20 flex flex-row content-stretch items-center justify-around bg-[color:var(--dark-green)] text-white z-20">
 
       <a href="/" className="flex items-center flex-shrink-0 text-white mr-6 ml-10 mr-auto pr-6">
         <Image 

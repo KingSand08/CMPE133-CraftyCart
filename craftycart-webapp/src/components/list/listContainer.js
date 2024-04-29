@@ -166,9 +166,9 @@ export default function ListContainer ( ) {
     }
 
     return (
-        <div className="bg-[color:var(--bg-white)]">
+        <div className="bg-[color:var(--bg-white)] mb-24">
+            <div className="fixed top-22 w-screen pr-12 z-10">
             <SearchBar addEntry={addEntry} clear={clearAll}/>
-            
             {
                 timeLeft <= 0 &&
                 <div className={`
@@ -196,9 +196,9 @@ export default function ListContainer ( ) {
                     Saving...
                 </div> 
              
-            } 
-            
-            
+            }
+            </div>
+            <div className="relative pt-28 z-0"> 
             {/*
             A button that can be used to manually save the list
 
@@ -226,22 +226,21 @@ export default function ListContainer ( ) {
 
                  
             </div>
-            {
-                entries.length === 0 &&
-                <button className="opacity-75 w-full" onClick={() => addEntry('New Item', 'Any Brand', quantity=1)}>
+            { entries.length === 0 &&
+                <button className="opacity-100 w-full" onClick={() => addEntry('New Item', 'Any Brand', 1)}>
                     <ListEntry
                         deleteSelf={()=>{return null}}
                         localId={-1}
-                        entryInfo={{text: "New Item...", brand: "", quantity: 0, checked: false, completed: false, template: true}}
+                        entryInfo={{text: "New Item...", brand: "Brand Name", quantity: 0, checked: false, completed: false, template: true}}
                     />
                 </button>
             } 
            
 
-            {isLoading ? <Spinner /> : null }
-            <div className="h-20 bg-transparent"></div>
+            {/* {isLoading ? <Spinner /> : null }
+            <div className="h-20 bg-transparent"></div> */}
 
-            
+            </div>
         </div>
         
         

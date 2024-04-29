@@ -70,9 +70,9 @@ export default function TaskBar(  ) {
                         flex flex-row items-center justify-around
                         bg-[color:var(--dark-green)] text-white">
                 <TaskButton fn={buttonClicked} text="Saved Lists" imageAddr="/favorites.svg" imageAlt="saved lists" />
-                <TaskButton fn={newList} text="New List" imageAddr="/newList.svg" imageAlt="new list" />
+                <TaskButton fn={newList} text="View List" imageAddr="/currentList.svg" imageAlt="view list" />
             <div>
-                <TaskButton fn={toggleMenu} text="Menu" imageAddr="/menu.svg" imageAlt="menu" />
+                <TaskButton fn={toggleMenu} text="Menu" imageAddr="/cart.svg" imageAlt="menu" />
                 <div className={`absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
                             rounded-md shadow-lg
                             text-white bg-green-800
@@ -162,7 +162,7 @@ function MenuButton( {fn, text = 'tooltip', onHover=""} ) {
                 onClick={fn} 
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                className="group text-slate-200 text-zinc-600 hover:text-green-400 hover:bg-slate-500 transition-all rounded-md p-1 my-1 w-full">          
+                className="group text-[color:var(--dark-green)] text-zinc-600 hover:text-green-400 hover:bg-slate-500 transition-all rounded-md p-1 my-1 w-full">          
             {onHover !== "" && hovered ? 
             onHover : text}
            
