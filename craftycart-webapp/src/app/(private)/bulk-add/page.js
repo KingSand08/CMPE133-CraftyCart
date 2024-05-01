@@ -1,5 +1,5 @@
 'use client';
-
+// TODO: make ui more understandable. Make it so you have to declare the store name
 import Papa from "papaparse";
 import { useState } from "react";
 
