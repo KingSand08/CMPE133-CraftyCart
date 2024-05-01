@@ -11,7 +11,7 @@ export async function POST(req) {
         try {
             const result = await Item.insertMany(items);
             return NextResponse.json({
-                message: "items successfully generated",
+                message: result,
                 success: true
             })
         }
@@ -23,7 +23,6 @@ export async function POST(req) {
             }, { status: 500 })
         }
     } else {
-        // res.status(405).json({ "message": 'Method Not Allowed' });
         return NextResponse.json({
             error: "method not allowed :(",
             success: false

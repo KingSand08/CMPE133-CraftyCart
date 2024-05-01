@@ -17,6 +17,10 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         required: [true, "price is required"]
     },
+    storeID: {
+        type: String,
+        required: true
+    }
 })
 
 const Item = mongoose.models.items || mongoose.model("items", itemSchema);
