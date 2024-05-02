@@ -17,11 +17,11 @@ export default function BulkAdd() {
             complete: async function (results) {
                 try {
                     const items = results.data.map(item => ({
+                        storeID: storeID,
                         name: item.name,
                         brand: item.brand,
                         category: item.category,
-                        price: item.price,
-                        storeID: storeID // Assuming storeID is defined elsewhere
+                        price: item.price
                     }));
                     const response = await fetch('/api/bulk-add', {
                         method: "POST",

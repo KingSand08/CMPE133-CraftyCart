@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const itemSchema = new mongoose.Schema({
+    storeID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "stores",
+    },
     name: {
         type: String,
         required: [true, 'item name is required'],
@@ -16,10 +20,6 @@ const itemSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: [true, "price is required"]
-    },
-    storeID: {
-        type: String,
-        required: true
     }
 })
 
