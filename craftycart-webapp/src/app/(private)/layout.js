@@ -19,6 +19,8 @@ export default function RootLayout({ children }) {
         
         {children}
 
+        <TaskBar className="pt-10"/>
+        
       </body>
     </html>
   );
