@@ -20,6 +20,10 @@ const itemSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: [true, "price is required"]
+    },
+    priceType: {
+        type: String, 
+        default: 'UNIT' // 'WEIGHT' or 'VOLUME'
     }
 })
 
