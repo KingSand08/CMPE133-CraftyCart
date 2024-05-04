@@ -6,7 +6,7 @@ import {useRouter}  from "next/navigation";
 import { redirect } from "@/components/redirect";
 
 
-const dropDownItemCSS = "pt-2 pb-2 pl-3 pr-3 w-full	 flex grow lg:inline-block text-white hover:bg-[color:var(--dark-green)] [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:[text-shadow:_0_1px_0_rgb(0_0_0_/_30%)]";
+const dropDownItemCSS = "pt-2 pb-2 pl-3 pr-3 w-full flex grow lg:inline-block justify-center text-center hover:bg-[color:var(--dark-green)] [text-shadow:_0_1px_0_rgb(0_0_0_/_10%)] hover:[text-shadow:_0_1px_0_rgb(0_0_0_/_30%)]";
 
 export default function Nav() {
   const router = useRouter();
@@ -96,14 +96,15 @@ export default function Nav() {
           }
         </button>
       </div>
-          <div className={`absolute z-40 top-[65px] right-4 flex flex-col gap-1 text-center	items-center rounded  border-4 border-[color:var(--darker-green)] bg-[color:var(--faded-green)] scale-0 ${dropdownState ? 'scale-100' : ''} transition-all duration-100 origin-top z-auto`}>
-              <DropdownButton name="Account Settings" fn= 
-                    { userData==="nothing" ? 
-                        () => {redirect("/account/login")}
-                        :
-                        () => {redirect("/account-settings")}
-                    } />
-              <DropdownButton name="Saved Lists" fn={() => {redirect("/saved-lists")}} />
+          <div className={`absolute z-40 top-[65px] right-4 flex flex-col gap-1 place-self-center	items-center rounded border-4 border-[color:var(--darker-green)] bg-[color:var(--faded-green)] scale-0 ${dropdownState ? 'scale-100' : ''} transition-all min-h-12 min-w-32 duration-100 origin-top z-auto`}>
+          { userData==="nothing" ? 
+              <></>
+              :
+              <>
+                <DropdownButton name="Account Settings" fn={() => {redirect("/account-settings")}} />
+                <DropdownButton name="Saved Lists" fn={() => {redirect("/saved-lists")}} />
+              </>
+          }
               <DropdownButton name="Help" fn={() => redirect("#tutorial")} />
           </div>
       </div>
