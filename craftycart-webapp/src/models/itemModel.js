@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+const mongoose_fuzzy_searching = require('mongoose-fuzzy-searching');
 
 const itemSchema = new mongoose.Schema({
     storeID: {
@@ -24,8 +25,16 @@ const itemSchema = new mongoose.Schema({
     priceType: {
         type: String, 
         default: 'UNIT' // 'WEIGHT' or 'VOLUME'
+    },
+    description: {
+        type: String,
+        required: false
     }
 })
+
+itemSchema.plugin(mongoose_fuzzy_searching, {
+    fields: ['name', 'brand', 'category', 'description']
+});
 
 const Item = mongoose.models.items || mongoose.model("items", itemSchema);
 
