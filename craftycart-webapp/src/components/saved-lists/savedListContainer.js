@@ -1,43 +1,42 @@
 "use client";
 
-import { useState , useEffect } from "react";
+import { useContext, useState} from "react";
 import SavedListEntry from "./savedListEntry";
-import { useContext } from "react";
-import { ScreenContext } from "@/app/(private)/saved-lists/page";
+import Button from "@/components/list/button";
+import { ScreenContext } from "@/components/list/screenContext";
 
-// const savedLists = [ {listID: abc},
+export default function SavedListContainer( {savedLists, historyLists } ) {
 
-//                     ];
 
-export default function SavedListContainer() {
-
-    const [nextId, setNextId] = useState(1);                                                 //create state variable controlling ID of the next list
+    const [nextId, setNextId] = useState(0);                                                 //create state variable controlling ID of the next list
 
      const [lists, setLists] = useState([]);                                                 //create state variable that contains user's lits
  
-     function deleteList ( listID ) {                                                        //deletes a list                     
+     const deleteList = ( listID ) => {                                                        //deletes a list                     
 
         console.log(listID + " removed");                  
         
-        const updatedLists = lists.filter(entryData => entryData.id !== listID);             //creates updatedList containing every element of the 
+        const updatedLists = lists.filter(entryData => entryData._id !== listID);             //creates updatedList containing every element of the 
                                                                                              //original list except the one to be deleted
 
         setLists(updatedLists);
      }
 
-     const saveList = (itemName='') => {                                                    //saves a list to lists state varaible                                                 
+     const saveList = ( currOwnerID ) => {                                                    //saves a list to lists state varaible                                                 
 
-        //setNextId(nextId + 1);
 
-        setNextId(n => n + 1);
-        console.log(itemName)
 
-        const newList = {
-            // id: nextId,
-            // text: itemName,
-            // completed: false,
+        setNextId(n => n + 1);                                                              //same as setNextId(nextId + 1);
 
-            //add properties of list you want to save into an object
+        const newSavedList = {
+
+            _id: nextId,
+            ownerId: currOwnerID,
+            saved: true,
+            name: "Shopping List",
+            creationDate: "2024-05-05T01:45:31.532Z",                                       //replace with date object
+            __v: 0
+
         }
         
         setLists([...entries, newList]);
@@ -59,58 +58,68 @@ export default function SavedListContainer() {
     // []      
     // );
 
-    
-    //use another context to add elements to the list
-    //remember setState(...state, newItem )
-        //(can access newItem using document.getElementById("ID"))
+  const { screen, setScreen } = useContext(ScreenContext);
 
-    //use another context to remove elemements from the list (argument is itemID)
-    //remember setState(...state.filter(element, index) => index !== itemID));
-        //if not using first argument ("element" -> can use underscore _ to ignore it)
-
-    //remember that these functions need to be set to the onclick properties of components  
-
-    const screen = useContext(ScreenContext);                                            //creates instance of ScreenContext (check page.js)
-
-    return (
+  return (
         <div>
-            <div class="grid grid-cols-2 gap-4">
+            <div className="flex justify-center text-5xl px-10 py-5 text-green-500">
+                <Button text={"History"} type={"History"} />
+                <Button text={"Saved"} type={"Saved"} />
+            </div>
+        
+            <div className ="grid grid-cols-2 gap-4"> 
+
+            {screen === "Saved" && savedLists ? (
+                savedLists.map((entry) => {
+                    return (
+                        <SavedListEntry
+                            key={entry.title}
+                            entryData={entry}
+                            clickAction={() => {deleteList(entry._id) ; console.log("Delete list")}}
+                        />
+                    );
+                })
+            ) : (
+            historyLists ? (
+                historyLists.map((entry) => {
+                    return (
+                        <SavedListEntry
+                        key={entry.title}
+                        entryData={entry}
+                        clickAction={() => {saveList(entryData.ownerId) ; console.log("Save list")}}
+                        />
+                    );
+                })
+            ) : (
+                <p>No lists found</p>
+            )
+            )}
+
+
+                {/* <SavedListEntry 
+                            entryData={{
+                            title: "Protein",
+                            firstItem: "Eggs",
+                            secondItem: "Beef",
+                            thirdItem: "Deez Nuts"
+                            }}
+                            
+                    />
 
                 
-                {/* <SavedListEntry
-                    data = {entry}
-                    saveSelf =  */}
+                    <SavedListEntry
+                            entryData={{
+                            title: "Pizza Party",
+                            firstItem: "Pepperoni",
+                            secondItem: "Swiss Cheese",
+                            thirdItem: "Flour"
+                            }}
+                            
+                    /> */}
 
-                <SavedListEntry 
-                        entryData={{
-                        title: "Protein",
-                        firstItem: "Eggs",
-                        secondItem: "Beef",
-                        thirdItem: "Deez Nuts"
-                        }}
-                        clickAction={deleteList} //add conditional to add if screen is on history
-                />
+            </div>
 
             
-                <SavedListEntry
-                        entryData={{
-                        title: "Pizza Party",
-                        firstItem: "Pepperoni",
-                        secondItem: "Swiss Cheese",
-                        thirdItem: "Flour"
-                        }}
-                        clickAction={deleteList} //add conditional to add if screen is on history
-                />
-            </div>
         </div>
-    )
+  );
 }
-
-//eventually get to point where no need to hard code entries, use maps method instead like brlow
-
-// savedLists.maps((entry, index) => <SavedListEntry 
-//                         title = {entry.title} 
-//                         firstItem = {entry.firstItem} 
-//                         secondItem = {entry.secondItem} 
-//                         thirdItem = {entry.thirdItem} 
-// />);
