@@ -22,6 +22,11 @@ export async function GET(request){
         }
 
         const userId = getDataFromToken(request);
+        if (userId) {
+            console.log ("USER: " + userId)
+        }
+
+
         let logged = false;
         if (request.cookies.get("token") !== undefined) {
             logged = true;
@@ -30,12 +35,16 @@ export async function GET(request){
         let currentShoppingList = null;
        
         if (logged ) {
+            console.log("user logged in");
             const user = await User.findOne({_id: userId});
-            const activeListId = user.activeList;
+            // console.log(user);
+            const activeListId = await user.get('activeList');
+            console.log("Active list: " + activeListId);
             currentShoppingList = await ShoppingList.findOne({_id: activeListId});
         } else {
             currentShoppingList = await ShoppingList.findOne({ownerId: userId});
         }
+        console.log (currentShoppingList);
         
        
         //console.log(currentShoppingList);

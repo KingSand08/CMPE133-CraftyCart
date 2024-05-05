@@ -29,7 +29,8 @@ export async function PUT(request){
     }
 
     try {
-        await ShoppingList.updateOne({_id: listId, ownerId: userId}, {$set: {saved: save}});
+        list.saved = save;
+        await list.save();
     } catch (e) {
         return NextResponse.json(
             {error: "error updating list"}, 
