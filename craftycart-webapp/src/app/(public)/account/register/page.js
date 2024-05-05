@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import {useRouter} from "next/navigation";
 import axios from "axios";
-
+import { redirect } from "@/components/redirect";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -18,16 +18,12 @@ export default function SignupPage() {
         try {
             console.log("Signing up");
             const response = await axios.post("/api/users/register", user);
-            router.push("/account/login");
+            redirect("/account/login");
             
         } catch (error) {
             console.log("Signup failed", error.message);
         }
     }
-
-    function redirect(link) {
-        window.location = link;
-      }    
 
     const inputCSS = "shadow border rounded w-full py-2 px-3 text-bg-[color:var(--dark-green)] leading-tight focus:shadow-outline focus:ring-2 focus:ring-green-300 focus:border-green-300 focus:bg-green-100"
     return (

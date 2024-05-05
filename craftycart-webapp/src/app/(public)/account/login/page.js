@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { redirect } from "@/components/redirect";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -29,10 +30,6 @@ export default function LoginPage() {
   }
 
   const inputCSS = "shadow border rounded w-full py-2 px-3 text-bg-[color:var(--dark-green)] leading-tight focus:shadow-outline focus:ring-2 focus:ring-green-300 focus:border-green-300 focus:bg-green-100"
-
-   function redirect(link) {
-    window.location = link;
-  }
 
 return (
     <div className="flex justify-center items-center w-screen">
@@ -69,16 +66,6 @@ return (
             >
                 Login
             </button>
-
-            {/* <Link href="/account/register" className="ml-2 text-center mt-4">
-                    Create a new account
-            </Link> */}
-
-            {/* <Link href="/account/register" className="text-center font-bold text-slate-50">
-                <div className="text-center font-bold py-2 px-4 rounded focus:shadow-outline text-white hover:text-green-800 hover:bg-green-200">
-                        Create a new account
-                </div>
-            </Link> */}
 
             <button
                 onClick={() => {redirect("/account/register")}}
