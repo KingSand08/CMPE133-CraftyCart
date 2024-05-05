@@ -18,7 +18,7 @@ import { ScreenContext } from "@/components/list/screenContext";
 
   //need to add function to restore list 
 
-  const restoreList = ( listID ) => {                       //should restoreList be a funciton of entry or the container?
+  const restoreList = ( listID ) => {                       //should restoreList be a function of entry or the container?
 
     //set current ID of list 
 
@@ -32,8 +32,8 @@ export default function SavedListEntry({ entryData, clickAction }) {
         <div>
             <div className = " m-2 p-4 w-96 flex flex-row grow box-border rounded-md shadow-md bg-[color:var(--white)] text-[color:var(--black)] items-center">
                 <div className = "flex flex-col grow m-3">
-                    <p className = "text-green-500 text-4xl my-4">{entryData.title}</p>
-
+                    <p className = "text-green-500 text-4xl my-4">{entryData.name}</p>
+                        {/* //automate this using map function */}
                     <li className = "mx-2">{entryData.firstItem}</li>
                     <li className = "mx-2">{entryData.secondItem}</li>
                     <li className = "mx-2">{entryData.thirdItem}</li>   
@@ -48,7 +48,7 @@ export default function SavedListEntry({ entryData, clickAction }) {
                     </button> 
 
                     <button>
-                        <p className = "border border-black rounded-md" onClick={()=> restoreList({entryData._id})}>Restore</p>
+                        <p className = "border border-black rounded-md" onClick={()=> restoreList(entryData._id)}>Restore</p>
                     </button> 
                 </div>
             </div>
