@@ -45,17 +45,30 @@ export async function GET(req) {
 
     const listItems = await ListEntry.find({listId: currentShoppingList.get('_id')});
     console.log (listItems);
-    const res = await linkItems(listItems);
-    if (!res) {
-        return NextResponse.json({
-            error: "could not link",
-        }, {status: 500});
-    }
+    
+    // items linked after every update of list
+    //
+    // const res = await linkItems(listItems);
+    // if (!res) {
+    //     return NextResponse.json({
+    //         error: "could not link",
+    //     }, {status: 500});
+    // }
 
 
     let calculatedStores;
     console.log ("Items should be linked, finding stores:");
     calculatedStores =  await findStores(listItems);
+
+    calculatedStores.sort((a, b) => {
+        if (a.missing == b.missing) {
+            return a.total - b.total;
+        } else {
+            return a.missing - b.missing;
+        }
+    })
+
+    calculatedStores = calculatedStores.slice(0, 5);
 
     if (calculatedStores !== null) {
         return NextResponse.json({

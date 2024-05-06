@@ -6,9 +6,9 @@ import { ObjectId } from 'mongodb';
 export default async function linkItems(listItems) {
 
     
-    //console.log(listItems);
-    try {
-        await listItems.forEach(async (entry) => {
+        console.log(listItems);
+    
+        listItems.forEach( async (entry) => {
         
             const  similar = await Item.fuzzySearch(entry.itemText).lean();
             console.log("SEARCH FOR: " + entry.itemText);
@@ -46,12 +46,12 @@ export default async function linkItems(listItems) {
             await ListEntry.updateOne({_id: entry._id}, {linked: matching}).catch (() => {
                 console.log ("ERROR");
             });
-        });
-        return true;
-    } catch (e) {
-        return false;
-    }
+        })
 
+
+
+  
+    
 
 }
 
