@@ -25,6 +25,7 @@ export async function GET(request) {
             request.cookies.get("tempToken") === undefined) {
             console.log("Creating a new guest token");
             userId = new ObjectId();
+            console.log("temp user id:" + userId);
             const tokenData = {
                 id: userId,
                 username: "guest",

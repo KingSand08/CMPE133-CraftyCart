@@ -14,9 +14,9 @@ export default function ResultsContainer ( {storeList, loading }) {
            <>
             {!loading ?
                 <div className="bg-[color:var(--bg-white)] mb-24">
-                    {storeList.map((storeInfo) => {
+                    {storeList.map((storeInfo, index) => {
                         return(
-                        <ResultEntry entryInfo={storeInfo}/>
+                        <ResultEntry key={index} entryInfo={storeInfo}/>
                         )
                     })}
                 

@@ -3,46 +3,54 @@ import Item from "@/models/itemModel";
 import Store from "@/models/storeModel";
 import { ObjectId } from 'mongodb';
 
-export default async function linkItems(list) {
+export default async function linkItems(listItems) {
 
-    const listItems = await ListEntry.find({listId: list._id});
-    console.log(listItems);
-
-    listItems.forEach(async (entry) => {
-       
-        const  similar = await Item.fuzzySearch(entry.itemText);
-        console.log("SEARCH FOR: " + entry.itemText);
+    
+    //console.log(listItems);
+    try {
+        await listItems.forEach(async (entry) => {
         
-        let seen = [];
-        let toLink = [];
-        // similar.forEach((item) => {
-        //     const storeid = item.storeID;
-
-        //         toLink.push(item);
-        //         seen.push(item.storeID);
+            const  similar = await Item.fuzzySearch(entry.itemText).lean();
+            console.log("SEARCH FOR: " + entry.itemText);
             
-        // });
+            //let seen = [];
+            //let toLink = [];
+            // similar.forEach((item) => {
+            //     const storeid = item.storeID;
 
-        ///// TODO: replace with better algorithm using confidence Scores
-        toLink = similar.slice(0, 4);
+            //         toLink.push(item);
+            //         seen.push(item.storeID);
+                
+            // });
 
-        console.log(toLink);
+            ///// TODO: replace with better algorithm using confidence Scores
+            //toLink = similar.slice(0, 4);
 
-        // don't know why this isnt working
-        //////////////
-        // const matching = similar.filter((item) => {
-        //     console.log(item + " " + item.confidenceScore);
-        //     return item.confidenceScore > 3;
-        // });
+            //console.log(toLink);
 
-        // console.log (matching);
+            // don't know why this isnt working
+            //////////////
+            const matching = similar.filter((item) => {
+                
+                //console.log("item: " + item.name + " " + "confidence: " + item.confidenceScore);
+                return item.confidenceScore > 3;
+            });
 
-        // console.log(similar);
-        console.log("UPDATING: " + entry._id + " linked");
-        ListEntry.updateOne({_id: entry._id}, {linked: toLink}).catch (() => {
-            console.log ("ERROR");
+            await matching.forEach((item)=>{
+                console.log(item.name);
+            });
+            // console.log("similar: " + similar);
+            // console.log("confidence: " + similar.confidenceScore);
+
+            console.log("UPDATING: " + entry._id + " linked");
+            await ListEntry.updateOne({_id: entry._id}, {linked: matching}).catch (() => {
+                console.log ("ERROR");
+            });
         });
-    });
+        return true;
+    } catch (e) {
+        return false;
+    }
 
 
 }

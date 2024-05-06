@@ -101,7 +101,8 @@ export default function ListContainer ( ) {
     async function newList() {
         const response = await axios.get('/api/lists/new-list');
         console.log(response.data.message);
-        router.refresh();
+        //router.refresh();
+        window.location.reload();
     }
 
     async function loadList() {
@@ -168,7 +169,7 @@ export default function ListContainer ( ) {
     return (
         <div className="bg-[color:var(--bg-white)] mb-24">
             <div className="fixed top-22 w-screen pr-12 z-10">
-            <SearchBar addEntry={addEntry} clear={clearAll}/>
+            <SearchBar addEntry={addEntry} clear={newList}/>
             {
                 timeLeft <= 0 &&
                 <div className={`

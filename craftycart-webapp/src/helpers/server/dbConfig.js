@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 export async function connect() {
     try {
         const options = {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
             
             //useFindAndModify: false,
             //useCreateIndex: true,

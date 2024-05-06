@@ -1,5 +1,6 @@
 import { connect } from "@/helpers/server/dbConfig";
 import Item from "@/models/itemModel";
+import ListEntry from "@/models/entryModel";
 import { ObjectId } from "mongodb";
 import { NextResponse } from "next/server";
 import linkItems  from "@/helpers/server/calculate/linkItems.js";
@@ -14,19 +15,19 @@ connect();
 
 export async function GET(req) {
    
-    const exampleStores = [
-        {name: "Target", address: "492 St. Road", total: 44.0, missing: 12},
-        {name: "Trader Joes", address: "492 St. Road Long address that might go off the screen", total: 6150, missing: 3},
-        {name: "Walmart", address: "", total: 2.65, missing: 20},
-        {name: "7-11", address: "492 St. Road", total: 10000, missing: 2},
-        {name: "Safeway", address: "492 St. Road", total: 134.65, missing: 200},
-      ]
+    // const exampleStores = [
+    //     {name: "Target", address: "492 St. Road", total: 44.0, missing: 12},
+    //     {name: "Trader Joes", address: "492 St. Road Long address that might go off the screen", total: 6150, missing: 3},
+    //     {name: "Walmart", address: "", total: 2.65, missing: 20},
+    //     {name: "7-11", address: "492 St. Road", total: 10000, missing: 2},
+    //     {name: "Safeway", address: "492 St. Road", total: 134.65, missing: 200},
+    //   ]
     
-    return NextResponse.json({
-            message: "top 5 stores found",
-            success: true,
-            topStores: exampleStores
-    });
+    // return NextResponse.json({
+    //         message: "top 5 stores found",
+    //         success: true,
+    //         topStores: exampleStores
+    // });
 
     
 
@@ -39,9 +40,22 @@ export async function GET(req) {
         });
     }
 
-    await linkItems(currentShoppingList);
-    let calculatedStores = [];
-    calculatedStores = await findStores(currentShoppingList);
+    console.log("current list: " + currentShoppingList);
+    console.log("listid: " + currentShoppingList.get('_id'));
+
+    const listItems = await ListEntry.find({listId: currentShoppingList.get('_id')});
+    console.log (listItems);
+    const res = await linkItems(listItems);
+    if (!res) {
+        return NextResponse.json({
+            error: "could not link",
+        }, {status: 500});
+    }
+
+
+    let calculatedStores;
+    console.log ("Items should be linked, finding stores:");
+    calculatedStores =  await findStores(listItems);
 
     if (calculatedStores !== null) {
         return NextResponse.json({
