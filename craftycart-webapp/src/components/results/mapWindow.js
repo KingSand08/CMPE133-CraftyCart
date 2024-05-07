@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Spinner from "@/components/spinner"
 import { React, useState, useCallback } from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+
 
 export default function MapWindow({storeList, loading }) {    
-
+    
     const containerStyle = {
         width: '500px',
         height: '500px'
@@ -14,9 +15,9 @@ export default function MapWindow({storeList, loading }) {
         id: 'google-map-script',
         googleMapsApiKey: "AIzaSyCQv6vwnEIicjDnNZXLUnBYRpc9o-8uwSs"
     })
-    
-    const center = {lat: -34.397, lng: 150.644};
-    const zoom = 8;
+
+    const center = {lat: 37.3352, lng: -121.8811};
+    const zoom = 16;
 
     return (
         <div className="flex align-middle justify-center  ">
@@ -29,7 +30,27 @@ export default function MapWindow({storeList, loading }) {
                             zoom={zoom}
                         >
                             { /* Child components, such as markers, info windows, etc. */ }
-                            <></>
+                        {/* Student Union */}
+                            <Marker
+                                    // onClick={() => alert("TOUCHED")}
+                                    key={0}
+                                    position={{ lat: 37.33444824517471, lng: -121.87967440588237 }}
+                                    title="Student Union"
+                                />
+                        {/* House of Bagles */}
+                            <Marker
+                                    // onClick={() => alert("TOUCHED")}
+                                    key={0}
+                                    position={{ lat: 37.336928941399286, lng: -121.87635178390906 }}
+                                    title="House of Bagles"
+                                />
+                        {/* Philz Coffee */}
+                        <Marker
+                                    onClick={() => alert("TOUCHED")}
+                                    key={0}
+                                    position={{ lat: 37.33375018216817, lng: -121.8848188578274 }}
+                                />
+
                         </GoogleMap>
                     ) : <></>
                     :
