@@ -8,6 +8,7 @@ import { redirect } from "@/components/redirect";
 export default function LoginPage() {
     const router = useRouter();
 
+    const [errorMsg, setErrorMsg] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
     const [user, setUser] = React.useState({
         email: "",
@@ -21,6 +22,7 @@ export default function LoginPage() {
             router.push("/"); // Redirect to home page
 
         } catch (error) {
+            setErrorMsg("Error logging in, please check credentials and try again");
             console.log("Login failed", error.message);
 
         } finally {
@@ -34,11 +36,17 @@ export default function LoginPage() {
         window.location = link;
     }
 
+
     return (
         <div className="flex justify-center items-center w-screen">
-            <div className="bg-green-600 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form className="bg-green-600 shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={(e)=>e.preventDefault()}>
                 <h1 className="text-lg font-bold text-white"> {loading ? "Processing..." : "Login"}</h1>
                 <hr className="mb-5" />
+                {errorMsg != null ?
+                   <div className="pb-2 text-red-500 drop-shadow-lg font-bold text-md">
+                        {errorMsg}
+                   </div>
+                : null}
 
                 <label htmlFor="email" className="block text-white text-sm font-bold mb-2">Email</label>
                 <input
@@ -46,6 +54,7 @@ export default function LoginPage() {
                     type="text"
                     value={user.email}
                     onChange={(e) => setUser({ ...user, email: e.target.value })}
+                    
                     placeholder="email"
                     className={inputCSS}
 
@@ -89,7 +98,7 @@ export default function LoginPage() {
                         </div>
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
 
     )

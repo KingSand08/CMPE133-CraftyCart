@@ -32,7 +32,7 @@ export default function ListContainer ( ) {
 
     useEffect(() => {
         loadList();
-        
+        setTimeLeft(1);
     }, []);
 
     useEffect(() => {

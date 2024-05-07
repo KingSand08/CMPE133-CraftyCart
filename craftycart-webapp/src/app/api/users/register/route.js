@@ -14,13 +14,25 @@ export async function POST(request){
         const reqBody = await request.json();
         const {username, email, password} = reqBody;
 // Parses the request body to extract username, email, and password.
+        if (!username) {
+            console.log("invalid username");
+            return NextResponse.json({error: "Must fill out Username feild"}, {status: 300});
+        }
+        if (email.length < 2) {
+            console.log("invalid email");
+            return NextResponse.json({error: "Must fill out Email feild"}, {status: 300});
+        }
 
+        if (password.length < 6) {
+            console.log("invalid password");
+            return NextResponse.json({error: "Please enter a password longer than 7 characters"}, {status: 300});
+        }
 //Checks if a user with the provided email already exists. 
         const user = await User.findOne({email});
 
 //If yes, returns a 400 response.
         if(user){
-            return NextResponse.json({error: "User already exists"}, {status: 400});
+            return NextResponse.json({error: "User already exists"}, {status: 300});
         }
 
 //hash password using bcryptjs.

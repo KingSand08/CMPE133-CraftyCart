@@ -12,27 +12,39 @@ export default function SignupPage() {
         password: "",
         username: "",
     })
+    const [errorMsg, setErrorMsg] = React.useState(null);
 
 
     const onSignup = async () => {
         try {
             console.log("Signing up");
             const response = await axios.post("/api/users/register", user);
+
+           
             redirect("/account/login");
             
         } catch (error) {
-            console.log("Signup failed", error.message);
+            setErrorMsg("Error creating account. " + error.response.data.error);
+            console.log("Signup failed", error.response.data.error);
+            
+
         }
     }
 
     const inputCSS = "shadow border rounded w-full py-2 px-3 text-bg-[color:var(--dark-green)] leading-tight focus:shadow-outline focus:ring-2 focus:ring-green-300 focus:border-green-300 focus:bg-green-100"
     return (
         <div className="flex justify-center items-center w-screen">
-            <div className = "bg-green-600 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form className = "bg-green-600 shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={(e)=>e.preventDefault()}>
 
 
                 <h1 className="text-lg font-bold text-white"> Create an Account </h1>
                 <hr className="mb-5"/>
+
+                {errorMsg != null ?
+                   <div className="pb-2 text-red-500 drop-shadow-lg font-bold text-md w-96">
+                        {errorMsg}
+                   </div>
+                : null}
 
                 <label htmlFor="username" className="block text-white text-sm font-bold mb-2">
                     Username
@@ -83,10 +95,10 @@ export default function SignupPage() {
                             Login
                         </span>
                 </button>
-            </div>
+                 </div>
 
-            </div>
-        </div>
+        </form>
+    </div>
     );
 
 }
