@@ -3,10 +3,12 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { redirect } from "@/components/redirect";
+import { useRouter } from "next/navigation";
 
 
 export default function TaskBar(  ) {
 
+    const router = useRouter();
     const [userfound, setUserFound] = useState(false);
 
     const [menuState, setMenuState] = useState(false);
@@ -57,16 +59,44 @@ export default function TaskBar(  ) {
         <div className="fixed bottom-0 left-0 w-screen h-16 
                         flex flex-row items-center justify-around
                         bg-[color:var(--dark-green)] text-white">
-                <TaskButton fn= 
-                    { userData==="nothing" ? 
+                <TaskButton fn={ userData==="nothing" ? 
                         () => {redirect("/account/login")}
                         :
                         () => {redirect("/saved-lists")}
-                    }
-                 text="Saved Lists" imageAddr="/favorites.svg" imageAlt="Saved Lists" />
-                <TaskButton fn={newList} text="New List" imageAddr="/newList.svg" imageAlt="New List" />
-                <TaskButton fn={() => {redirect("/")}} text="View Current List" imageAddr="/currentList.svg" imageAlt="View List" />
-                <TaskButton fn={toggleMenu} text="Find Stores" imageAddr="/cart.svg" imageAlt="Find Stores" />
+                    } text="Saved Lists" imageAddr="/favorites.svg" imageAlt="Saved Lists" />
+                <TaskButton fn={
+                    ()=>{router.push("/");}
+                    // newList
+                    } text="View List" imageAddr="/currentList.svg" imageAlt="View List" />
+            {/* <div> */}
+                <TaskButton fn={() => {router.push("/results/")}} text="Find Stores" imageAddr="/cart.svg" imageAlt="Find Stores" />
+                {/* <div className={`absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
+                            rounded-md shadow-lg
+                            text-white bg-green-800
+                            text-xl font-bold
+                            transition-all duration-100 scale-0 origin-bottom
+                            ${menuState ? 'scale-100' : ''}`}>
+                    <ul>
+                        {
+                            userData==="nothing" ?
+                            <MenuButton fn={() => {
+                                router.push('/account/login');
+                            }} text="Sign in"/> :
+                            <MenuButton fn={() => {
+                                router.push("/account-settings");
+                            }
+                            } text={userData.username}
+                            onHover="Account Settings" />
+                        }
+                        { userData !== "nothing" ? 
+                            <MenuButton fn={logout} text="Log out"/> :
+                            <></>
+                        }
+                    </ul>
+                </div>
+            </div> */}
+         
+            
         </div>
     );
 }
