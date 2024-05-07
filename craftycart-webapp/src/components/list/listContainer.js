@@ -12,7 +12,7 @@ import {saveList} from "@/helpers/client/saveList";
 import { set } from "mongoose";
 
 
-export default function ListContainer ( ) {
+export default function ListContainer ( {setBusySaving} ) {
     const [isLoading, setLoading] = useState(true);
     // the next id to be assigned to a new entry
     const [nextId, setNextId] = useState(0);
@@ -30,9 +30,14 @@ export default function ListContainer ( ) {
     // when time is 0, save the list, modifiying functions set the timer > 0, and delay a save
     const[timeLeft, setTimeLeft] = useState(-1);
 
+    function setTimeToSave(time) {
+        setBusySaving(true);
+        setTimeLeft(time);
+    }
+
     useEffect(() => {
         loadList();
-        
+        setTimeToSave(1);
     }, []);
 
     useEffect(() => {
@@ -43,14 +48,16 @@ export default function ListContainer ( ) {
         if (timeLeft === 0) {
             console.log("SAVING...");
             console.log(entries);
-            saveList(entries, setEntries, currentList, toDelete, setToDelete,);
-            setTimeLeft(-1);
+            saveList(entries, setEntries, currentList, toDelete, setToDelete, setBusySaving);
+            
+
+            setTimeToSave(-1);
             return;
         }
 
         const interval = setInterval(() => {
             
-            setTimeLeft(timeLeft - .25);
+            setTimeToSave(timeLeft - .25);
             console.log(timeLeft);
         }, 250);
 
@@ -81,7 +88,7 @@ export default function ListContainer ( ) {
         }
         
         setEntries([...entries, newEntry]);
-        setTimeLeft(1);
+        setTimeToSave(1);
         console.log(nextId + " added");
 
 
@@ -95,7 +102,7 @@ export default function ListContainer ( ) {
         if (removed.dbId) {
             setToDelete([...toDelete, removed.dbId]);
         }
-        setTimeLeft(1);
+        setTimeToSave(1);
     }
 
     async function newList() {
@@ -156,14 +163,14 @@ export default function ListContainer ( ) {
     function clearAll() {
         setToDelete([...toDelete, ...entries.map(entry => entry.dbId)]);
         setEntries([]);
-        setTimeLeft(1);
+        setTimeToSave(1);
     }
 
     function modifyEntry(newEntry, index) {
         const newEntries = [...entries];
         newEntries[index] = newEntry;
         setEntries(newEntries);
-        setTimeLeft(1);
+        setTimeToSave(1);
     }
 
     return (
