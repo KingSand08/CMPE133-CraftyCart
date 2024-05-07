@@ -5,6 +5,8 @@ import { use, useEffect, useState, useMemo, componenetDidMount } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ErrorDisplay from "@/components/errorDisplay.js";
+import TaskBar from "@/components/taskbar";
+
 
 
 
@@ -51,6 +53,7 @@ export default function Home() {
         
         
         <ResultsContainer storeList={storeList} loading={isLoading}/>
+        <TaskBar  className="pt-10"/>
     </main>
   );
   
