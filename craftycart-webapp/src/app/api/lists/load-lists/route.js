@@ -32,15 +32,14 @@ export async function GET(request){
         
 
         const savedLists = await ShoppingList.find({ 
-            ownerId: userId,
-            saved: true,
+            ownerId: userId
         });
 
 
-        const historyLists = await ShoppingList.find({
-            ownerId: userId,
-            saved: false,
-        });
+        // const historyLists = await ShoppingList.find({
+        //     ownerId: userId,
+        //     saved: false,
+        // });
        
             
         // console.log(savedLists);
@@ -66,10 +65,10 @@ export async function GET(request){
         }
 
         const savedWithEntries = await getPreview(savedLists);
-        const historyWithEntries = await getPreview(historyLists);
+        //const historyWithEntries = await getPreview(historyLists);
         
         console.log(savedWithEntries);
-        console.log(historyWithEntries);
+        //console.log(historyWithEntries);
             
         
 
@@ -85,9 +84,9 @@ export async function GET(request){
         //console.log(currentShoppingList);
 
         const response = NextResponse.json({
-            message: (savedLists.length + historyLists.length) + " lists loaded successfully",
+            message: (savedLists.length ) + " lists loaded successfully",
             success: true,
-            data: {saved: savedWithEntries, history: historyWithEntries}
+            data: {saved: savedWithEntries}
         });
         return response;
 
