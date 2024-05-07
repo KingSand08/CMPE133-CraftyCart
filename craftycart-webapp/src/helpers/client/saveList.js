@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function saveList(entries, setEntries, listInfo, toDelete, setToDelete) {
+export async function saveList(entries, setEntries, listInfo, toDelete, setToDelete, setBusySaving) {
     // entries is an array of all current list entries
     // entry {
         // id: local id of the element
@@ -33,6 +33,7 @@ export async function saveList(entries, setEntries, listInfo, toDelete, setToDel
 
     setEntries(newEntries);
     setToDelete([]);
+    setBusySaving(false);
       
 
     
