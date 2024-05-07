@@ -3,10 +3,12 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { redirect } from "@/components/redirect";
+import { useRouter } from "next/navigation";
 
 
 export default function TaskBar(  ) {
 
+    const router = useRouter();
     const [userfound, setUserFound] = useState(false);
 
     const [menuState, setMenuState] = useState(false);
