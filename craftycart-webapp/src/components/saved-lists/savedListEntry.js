@@ -1,5 +1,6 @@
 
 'use client'
+'use client'
 import Image from "next/image"
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from "react";
@@ -10,6 +11,15 @@ import { useRouter } from "next/navigation";
 
 // SavedListEntry.propTypes = {                                        //defines what an object (prop) of SavedListEntry should contain
 
+// SavedListEntry.propTypes = {                                        //defines what an object (prop) of SavedListEntry should contain
+
+//     entryData: PropTypes.shape( {
+//         title: PropTypes.string,
+//         firstItem: PropTypes.string,
+//         secondItem: PropTypes.string,
+//         thirdItem: PropTypes.string,
+//     })
+//   };
 //     entryData: PropTypes.shape( {
 //         title: PropTypes.string,
 //         firstItem: PropTypes.string,
