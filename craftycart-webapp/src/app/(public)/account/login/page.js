@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { redirect } from "@/components/redirect";
 
 export default function LoginPage() {
     const router = useRouter();

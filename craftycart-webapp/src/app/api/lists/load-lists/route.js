@@ -22,29 +22,32 @@ export async function GET(request){
         }
 
         const userId = getDataFromToken(request);
-        if (userId) {
-            console.log ("USER: " + userId)
-        }
-
-
         let logged = false;
         if (request.cookies.get("token") !== undefined) {
             logged = true;
         }
 
-        let currentShoppingList = null;
+        let savedLists = [];
+        let historyLists = [];
+
+        savedLists = await ShoppingList.find({ 
+            ownerId: userId,
+            saved: true,
+        });
+
+
+        historyLists = await ShoppingList.find({
+            ownerId: userId,
+            saved: false,
+        });
        
-        if (logged ) {
-            console.log("user logged in");
-            const user = await User.findOne({_id: userId});
-            // console.log(user);
-            const activeListId = await user.get('activeList');
-            console.log("Active list: " + activeListId);
-            currentShoppingList = await ShoppingList.findOne({_id: activeListId});
-        } else {
-            currentShoppingList = await ShoppingList.findOne({ownerId: userId});
-        }
-        console.log (currentShoppingList);
+        // if (logged ) {
+        //     const user = await User.findOne({_id: userId});
+        //     const activeListId = user.activeList;
+        //     currentShoppingList = await ShoppingList.findAll({_id: activeListId});
+        // } else {
+        //     currentShoppingList = await ShoppingList.findAll({ownerId: userId});
+        // }
         
        
         //console.log(currentShoppingList);
@@ -52,7 +55,7 @@ export async function GET(request){
         const response = NextResponse.json({
             message: "List loaded successfully",
             success: true,
-            currentShoppingList
+            data: {savedLists, historyLists}
         });
         return response;
 
