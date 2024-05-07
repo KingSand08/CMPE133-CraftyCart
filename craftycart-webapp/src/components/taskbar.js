@@ -1,16 +1,12 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "@/components/redirect";
 
 
 export default function TaskBar(  ) {
 
-    const router = useRouter();    
-
-    
     const [userfound, setUserFound] = useState(false);
 
     const [menuState, setMenuState] = useState(false);
@@ -20,19 +16,7 @@ export default function TaskBar(  ) {
 
     const buttonClicked = () => {
         alert("button clicked");
-    }
-
-    // const logout = async () => {
-    //     try {
-          
-    //       await axios.get("/api/users/logout");
-    //       window.location.reload();
-    
-    //     } catch (error) {
-    //       console.log(error.message);
-    //     }
-    // }
-       
+    }       
    
     const [userData, setUserData] = useState("nothing")
 
@@ -54,7 +38,7 @@ export default function TaskBar(  ) {
     async function newList() {
         const response = await axios.get('/api/lists/new-list');
         console.log(response.data.message);
-        window.location.reload();
+        redirect("/");
     }
 
     useEffect( () => {
@@ -64,12 +48,20 @@ export default function TaskBar(  ) {
         }
     }, []);
 
+    function handleSavedRedirect() {
+        
+    }
+
 
     return (
         <div className="fixed bottom-0 left-0 w-screen h-16 
                         flex flex-row items-center justify-around
                         bg-[color:var(--dark-green)] text-white">
-                <TaskButton fn={()=>{router.push("/saved-lists");}} text="Saved Lists" imageAddr="/favorites.svg" imageAlt="Saved Lists" />
+                <TaskButton fn={ userData==="nothing" ? 
+                        () => {redirect("/account/login")}
+                        :
+                        () => {redirect("/saved-lists")}
+                    } text="Saved Lists" imageAddr="/favorites.svg" imageAlt="Saved Lists" />
                 <TaskButton fn={
                     ()=>{router.push("/");}
                     // newList
@@ -174,5 +166,3 @@ function MenuButton( {fn, text = 'tooltip', onHover=""} ) {
             
     );
 }
-
-

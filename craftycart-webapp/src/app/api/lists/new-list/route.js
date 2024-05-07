@@ -72,8 +72,9 @@ export async function GET(request) {
         }
 
         if (logged) {
-            const user = await User.findOne({ _id: userId });
-            user.activeList = savedList._id;
+            console.log("updating user active list");
+            const user = await User.findOne({_id: userId});
+            user.activeList = savedList.get('_id');
             await user.save();
 
             let numLists = ShoppingList.countDocuments({ ownerId: userId });

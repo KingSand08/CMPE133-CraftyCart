@@ -21,6 +21,7 @@ export async function saveList(entries, setEntries, listInfo, toDelete, setToDel
 
     const responce  = await axios.put('/api/lists/update-entries', {listId: listId, entries: entries, toDelete: toDelete});
 
+
     console.log(responce.data);
 
     const toModify = responce.data.newIDs;
