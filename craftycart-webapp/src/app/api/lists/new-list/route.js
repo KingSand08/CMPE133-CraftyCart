@@ -1,36 +1,37 @@
 import { getDataFromToken } from "@/helpers/getDataFromToken";
-import {connect} from "@/helpers/server/dbConfig";
-import ShoppingList from "@/models/listModel";
-import { NextRequest, NextResponse } from "next/server";
-import {ObjectId } from 'mongodb';
-import jwt from "jsonwebtoken";
-import User from "@/models/userModel";
 import { clearExtraLists } from "@/helpers/server/clearExtraLists";
+import { connect } from "@/helpers/server/dbConfig";
+import ShoppingList from "@/models/listModel";
+import User from "@/models/userModel";
+import jwt from "jsonwebtoken";
+import { ObjectId } from 'mongodb';
+import { NextResponse } from "next/server";
 
 connect();
 // Calls the connect function to establish a connection to the database.
 
 
-export async function GET(request){
-// Defines an asynchronous POST request handler.
+export async function GET(request) {
+    // Defines an asynchronous POST request handler.
     try {
 
         let userId = null;
         let logged = false;
         let newCookies = null;
 
-        
 
-        if ( request.cookies.get("token") === undefined && 
-        request.cookies.get("tempToken") === undefined ) {
+
+        if (request.cookies.get("token") === undefined &&
+            request.cookies.get("tempToken") === undefined) {
             console.log("Creating a new guest token");
             userId = new ObjectId();
+            console.log("temp user id:" + userId);
             const tokenData = {
                 id: userId,
                 username: "guest",
                 email: "guest"
             };
-            const token = jwt.sign(tokenData, process.env.TOKEN_SECRET, {expiresIn: "7d"});
+            const token = jwt.sign(tokenData, process.env.TOKEN_SECRET, { expiresIn: "7d" });
 
             newCookies = {
                 name: "tempToken",
@@ -39,20 +40,20 @@ export async function GET(request){
                     httpOnly: true,
                 },
             };
-            
+
         } else {
             userId = await getDataFromToken(request);
         }
-        
+
         if (request.cookies.get("token") !== undefined) {
             logged = true;
         }
-        
+
         //console.log(userId, logged);
-       
+
         if (!logged) {
             console.log("Deleting guest's lists");
-            await ShoppingList.deleteMany({ownerId: userId});
+            await ShoppingList.deleteMany({ ownerId: userId });
         }
 
         const newList = new ShoppingList({
@@ -76,7 +77,7 @@ export async function GET(request){
             user.activeList = savedList.get('_id');
             await user.save();
 
-            let numLists = ShoppingList.countDocuments({ownerId: userId});
+            let numLists = ShoppingList.countDocuments({ ownerId: userId });
             //e.log(numLists);
 
             clearExtraLists(userId);
@@ -86,7 +87,7 @@ export async function GET(request){
 
 
     } catch (error) {
-        return NextResponse.json({error: error.message}, {status: 500});
+        return NextResponse.json({ error: error.message }, { status: 500 });
 
     }
 }

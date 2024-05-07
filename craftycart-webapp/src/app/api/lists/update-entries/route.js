@@ -7,6 +7,7 @@ import User from "@/models/userModel";
 import { clearExtraLists } from "@/helpers/server/clearExtraLists";
 import ListEntry from "@/models/entryModel";
 import {ObjectId} from 'mongodb';
+import linkItems  from '@/helpers/server/calculate/linkItems';
 
 connect();
 // Calls the connect function to establish a connection to the database.
@@ -75,12 +76,26 @@ export async function PUT(request){
             await ListEntry.deleteOne({_id: element});
         });
 
+
+        // linking items
+        const async_link = async () => {
+            
+            const dbEntries = await ListEntry.find({listId: list._id}).lean();
+            console.log("linking items " + dbEntries);
+            linkItems(dbEntries);
+        }
+        async_link();
+
+
         console.log(newIDs);
         return NextResponse.json({
             message: "update successful",
             success: true,
             newIDs: newIDs,
         });
+
+       
+
 
     } catch (error) {
         return NextResponse.json({error: error.message}, {status: 500});
