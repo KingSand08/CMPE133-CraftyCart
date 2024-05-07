@@ -5,6 +5,7 @@ import { use, useEffect, useState, useMemo, componenetDidMount } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ErrorDisplay from "@/components/errorDisplay.js";
+import TaskBar from "@/components/taskbar";
 
 
 
