@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.6",
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
     "js-cookie": "^3.0.5",
