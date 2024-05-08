@@ -45,6 +45,10 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                         min="1" max="99"
                         placeholder="1"
                         defaultValue={(entryInfo) ? entryInfo["quantity"] : ""}
+                        onChange={(event) => { 
+                            entryInfo.quantity = event.target.value;
+                            updateEntry(entryInfo, localId);
+                        }}
                         className="w-8 bg-[color:var(--white)] placeholder-[color:var(--black)]  flex flex-row"
                         dir="rtl"
                     />
