@@ -33,7 +33,7 @@ export default function MapWindow({storeList, loading }) {
                         lng: position.coords.longitude,
                     };
                     setCurrentPosition(pos);
-                    currentPositionIcon.anchor = new window.google.maps.Point(pos.lat, pos.lng);
+                    currentPositionIcon.anchor = window.google.maps.Point;
                 },
                 () => {
                     console.error("Error: The Geolocation service failed.");
