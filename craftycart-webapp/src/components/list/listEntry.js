@@ -1,39 +1,65 @@
+import { useEffect, useRef, useState } from "react";
+
 export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, entryInfo} ) {  
+
+    const [entryText, setEntryText] = useState(entryInfo.text);
+    const [quantity, setQuantity] = useState(entryInfo.quantity);
+    const [checked, setChecked] = useState(entryInfo.checked);
+
+    const checkboxRef = useRef(null);
+  
+
     return (
         <div className="
             m-2 p-4 flex flex-row justify-between grow box-border 
-            rounded-md shadow-md bg-[color:var(--white)] text-[color:var(--black)]"
+            rounded-md shadow-md bg-[color:var(--white)] text-[color:var(--black)] "
         >
-            <div className="flex flex-col">
+            <div className="flex flex-row ">
                 <input
-                    type="text"
-                    name="list-item-name"
-                    id="list-item-name"
-                    placeholder="Item name..."
-                    defaultValue={(entryInfo) ? entryInfo["text"] : ""}
-                    onChange={(event) => { 
-                        entryInfo.text = event.target.value;
-                        updateEntry(entryInfo, localId);
-                    }}
-                    className="text-lg bg-[color:var(--white)] placeholder-[color:var(--black)]"
-                />
+                        type="checkbox"
+                        name="list-checked"
+                        id="list-checked"
+                        checked={ checked }
+                        ref={checkboxRef}
+                        onChange={(event) => { 
+                            setChecked(!checked);
+                            console.log(checkboxRef.current.checked);
+                            updateEntry(entryInfo, localId, entryText, quantity, checkboxRef.current.checked );
+                        }}
+                        
+                        className="size-6 mr-4"
+                    />
+                <div className="flex flex-col">
+                    <input
+                        type="text"
+                        name="list-item-name"
+                        id="list-item-name"
+                        placeholder="Item name..."
+                        defaultValue={ entryText }
+                        onChange={(event) => { 
+                            setEntryText(event.target.value);
+                            updateEntry(entryInfo, localId, event.target.value, quantity);
+                        }}
+                        className="text-lg bg-[color:var(--white)] placeholder-[color:var(--black)] "
+                    />
 
-                { !entryInfo["template"] ?
-                <input
-                    type="text"
-                    name="list-brand-name"
-                    id="list-brand-name"
-                    placeholder="Any Brand"
-                    defaultValue={(entryInfo) ? entryInfo["brand"] : ""}
-                    className="text-xs bg-[color:var(--white)] placeholder-[color:var(--black)]"
-                />
+                    {/* { !entryInfo["template"] ?
+                    <input
+                        type="text"
+                        name="list-brand-name"
+                        id="list-brand-name"
+                        placeholder="Any Brand"
+                        defaultValue={(entryInfo) ? entryInfo["brand"] : ""}
+                        className="text-xs bg-[color:var(--white)] placeholder-[color:var(--black)]"
+                    />
 
-                :
+                    :
 
-                <div className="text-xs bg-[color:var(--white)] placeholder-[color:var(--black)] h-4">
-                    </div>
-                }
+                    <div className="text-xs bg-[color:var(--white)] placeholder-[color:var(--black)] h-4">
+                        </div>
+                    } */}
 
+                </div>
             </div>
             { !entryInfo["template"] &&
             <div className="flex flex-row overflow-hidden whitespace-nowrap">
@@ -44,12 +70,12 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                         id="list-quantity"
                         min="1" max="99"
                         placeholder="1"
-                        defaultValue={(entryInfo) ? entryInfo["quantity"] : ""}
+                        defaultValue={(entryInfo) ? quantity : ""}
                         onChange={(event) => { 
-                            entryInfo.quantity = event.target.value;
-                            updateEntry(entryInfo, localId);
+                            setQuantity( event.target.value);
+                            updateEntry(entryInfo, localId, entryText, event.target.value);
                         }}
-                        className="w-8 bg-[color:var(--white)] placeholder-[color:var(--black)]  flex flex-row"
+                        className="w-10 bg-[color:var(--white)] placeholder-[color:var(--black)]  flex flex-row"
                         dir="rtl"
                     />
                     x

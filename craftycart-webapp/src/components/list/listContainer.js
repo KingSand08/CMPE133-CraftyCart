@@ -76,15 +76,15 @@ export default function ListContainer ( {setBusySaving} ) {
         // I am not using this right now so essentially, this is just a wrapper for addEntryLocal
     }
     const addEntryLocal = (itemName='', brandName='', quantity=1) => {
-        setNextId(nextId + 1);
+       // setNextId(nextId + 1);
         console.log(itemName)
         const newEntry = {
-            id: nextId,
+            id: entries.length,
             dbId: null,
             text: itemName,
             brand: brandName,
             quantity: quantity,
-            completed: false,
+            checked: false,
         }
         
         setEntries([...entries, newEntry]);
@@ -97,7 +97,10 @@ export default function ListContainer ( {setBusySaving} ) {
     const deleteEntry = (localId) => {
         console.log(localId + " removed");
         const removed = entries.find(entry => entry.id === localId);
-        const newEntries = entries.filter(entry => entry.id !== localId);
+        const newEntries = entries.filter(entry => entry.id !== localId).map((entry, index) => {
+            entry.id = index;
+            return entry;
+        });
         setEntries(newEntries);
         if (removed.dbId) {
             setToDelete([...toDelete, removed.dbId]);
@@ -137,8 +140,7 @@ export default function ListContainer ( {setBusySaving} ) {
                 text: entry.itemText,
                 brand: entry.brandText,
                 quantity: entry.quantity,
-                checked: entry.checked,
-                completed: false,
+                checked: entry.checked
             });
             id++;
         });
@@ -166,9 +168,12 @@ export default function ListContainer ( {setBusySaving} ) {
         setTimeToSave(1);
     }
 
-    function modifyEntry(newEntry, index) {
-        const newEntries = [...entries];
-        newEntries[index] = newEntry;
+    async function modifyEntry(newEntry, index, text, quantity, checked) {
+        const newEntries = entries.slice();
+       newEntries[index].text = text;
+       newEntries[index].quantity = quantity;
+       newEntries[index].checked = checked;
+       //console.log(newEntries);
         setEntries(newEntries);
         setTimeToSave(1);
     }
@@ -224,7 +229,7 @@ export default function ListContainer ( {setBusySaving} ) {
                         <ListEntry 
                             updateEntry={modifyEntry}
                             deleteSelf={deleteEntry} 
-                            key={entry.id} 
+                            key={entry.id}
                             localId={entry.id}
                             entryInfo={entry}
                             
