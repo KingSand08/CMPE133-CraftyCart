@@ -62,7 +62,7 @@ export default function MapWindow({storeList, loading }) {
     const markers = storeList ? storeList.map((store, index) => ({
         index: store.index,
         position: { lat: store.lat, lng: store.lng },
-        title: store.title,
+        title: store.name,
         total: store.total,
         missing: store.missing,
     })) : [];
