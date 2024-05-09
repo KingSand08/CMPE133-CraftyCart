@@ -2,6 +2,11 @@ import { useEffect, useRef, useState } from "react";
 
 export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, entryInfo} ) {  
 
+    if (updateEntry == null) {
+        updateEntry = ()=>{return null}
+    }
+   
+
     const [entryText, setEntryText] = useState(entryInfo.text);
     const [quantity, setQuantity] = useState(entryInfo.quantity);
     const [checked, setChecked] = useState(entryInfo.checked);
@@ -14,7 +19,7 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
             m-2 p-4 flex flex-row justify-between grow box-border 
             rounded-md shadow-md bg-[color:var(--white)] text-[color:var(--black)] "
         >
-            <div className="flex flex-row ">
+            <div className="flex flex-row w-full">
                 <input
                         type="checkbox"
                         name="list-checked"
@@ -29,7 +34,7 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                         
                         className="size-6 mr-4"
                     />
-                <div className="flex flex-col">
+                <div className="flex flex-col  w-full">
                     <input
                         type="text"
                         name="list-item-name"
@@ -40,7 +45,7 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                             setEntryText(event.target.value);
                             updateEntry(entryInfo, localId, event.target.value, quantity);
                         }}
-                        className="text-lg bg-[color:var(--white)] placeholder-[color:var(--black)] "
+                        className="text-lg w-full pr-2 bg-[color:var(--white)] placeholder-[color:var(--black)] "
                     />
 
                     {/* { !entryInfo["template"] ?
@@ -62,7 +67,7 @@ export default function ListEntry( {updateEntry, addAfter, deleteSelf, localId, 
                 </div>
             </div>
             { !entryInfo["template"] &&
-            <div className="flex flex-row overflow-hidden whitespace-nowrap">
+            <div className="flex flex-row w-32 overflow-hidden whitespace-nowrap">
                 <label className="mr-6 flex flex-row items-center">
                     <input 
                         type="number"
