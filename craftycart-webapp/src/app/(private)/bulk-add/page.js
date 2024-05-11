@@ -2,6 +2,7 @@
 // TODO: make ui more understandable. Make it so you have to declare the store name
 import Papa from "papaparse";
 import { useState } from "react";
+import axios from "axios";
 
 export default function BulkAdd() {
     const [file, setFile] = useState(null);
@@ -71,30 +72,60 @@ export default function BulkAdd() {
         setStoreID(event.target.value)
     }
 
+    async function  clearDB() {
+        if (window.confirm("Are you sure? All items and stores will be removed. This action cannot be undone.")) {
+            await axios.put('/api/bulk-add/clear', {
+                method: "POST",
+                headers: {
+                    'Content-type': 'application/json',
+                },
+            }).then(res => {
+                if (res.data.success) {
+                    setPrev("Database cleared successfully.")
+                } else {
+                    setPrev("Error clearing database.")
+                }
+            })
+        }
+    }
+
     return (
-        <form className="flex flex-col justify-center items-center h-screen" onSubmit={handleSubmit}>
-            <h3>Add your .csv items below.</h3>
-            <h3>Upload items table to add to database</h3>
-            <h3>Upload stores with blank _id and generated ids will be in results.</h3>
-            <h3>Upload stores with filled in _id parameter to restore a collection </h3>
-            <input type="file" id="bulkadd-file" accept=".csv" onChange={handleFileChange} />
-            <br />
-            <div>
-                <input onChange={(e)=>{setSubmissionType(e.target.value); console.log(e.target.value)}} type="radio" id="items" name="input_type" value="items"/>
-                <span for="items"> ITEMS</span><br/>
-                <input onChange={(e)=>{setSubmissionType(e.target.value); console.log(e.target.value)}} type="radio" id="stores" name="input_type" value="stores"/>
-                <span for="stores"> STORES</span><br/> 
+        <>
+            <form className="flex flex-col  items-center " onSubmit={handleSubmit}>
+                <div className="mb-10">
+                <h3>Add your .csv items below.</h3>
+                    
+                    <h3>Upload stores with blank '_id' field and generated ids will be in results.</h3>
+                    <h3>Upload stores with filled in _id parameter to restore a collection </h3>
+                    <h3>Upload items table to add to database</h3>
+                    <br/>
+                    <h3>Select "ITEMS" or "STORES" depending on type uploaded</h3>
+                </div>
+                <input type="file" id="bulkadd-file" accept=".csv" onChange={handleFileChange} />
+                <br />
+                <div>
+                    <input onChange={(e)=>{setSubmissionType(e.target.value); console.log(e.target.value)}} type="radio" id="items" name="input_type" value="items"/>
+                    <span for="items"> ITEMS</span><br/>
+                    <input onChange={(e)=>{setSubmissionType(e.target.value); console.log(e.target.value)}} type="radio" id="stores" name="input_type" value="stores"/>
+                    <span for="stores"> STORES</span><br/> 
+                </div>
+                <br />
+                {/* <input type="text" id="bulkadd-storeID" onChange={handleIDChange}></input> */}
+                <div className="bg-[color:var(--green)] p-1 rounded-md">
+                    <button type="submit"> submit </button>
+                </div>
+                
+                <div>
+                    <h2>Results:</h2>
+                    <textarea value={prev} rows={10} cols={50} readOnly></textarea>
+                </div>
+                
+            </form>
+            <div className="mt-10 mb-36 flex align-middle justify-center w-auto p-auto">
+                <button className="bg-red-500 p-2 rounded-md"
+                onClick={() => {clearDB();}}>Clear Database</button>
             </div>
-            <br />
-            {/* <input type="text" id="bulkadd-storeID" onChange={handleIDChange}></input> */}
-            <div className="bg-[color:var(--green)] p-1 rounded-md">
-                <button type="submit"> submit </button>
-            </div>
-            
-            <div>
-                <h2>Results:</h2>
-                <textarea value={prev} rows={10} cols={50} readOnly></textarea>
-            </div>
-        </form>
+        </>
+        
     )
 }
