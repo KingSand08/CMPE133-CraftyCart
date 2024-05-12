@@ -69,6 +69,9 @@ export async function GET(req) {
     })
 
     calculatedStores = calculatedStores.slice(0, 5);
+    calculatedStores.forEach((store, index) => {
+        store.index = index;
+    })
 
     if (calculatedStores !== null) {
         return NextResponse.json({

@@ -8,7 +8,7 @@ import { BackButton } from "@/components/backButton";
 export default function AccountInfo() {
     
     const router = useRouter()
-    const [data, setData] = useState("nothing")
+    const [data, setData] = useState({username: null, email: null})
 
     const getUserDetails = async () => {
             
@@ -51,27 +51,27 @@ export default function AccountInfo() {
                         Change Email
                 </button>
             </div>
-            <button onClick={() => {deleteAccount()}}
+            {/* <button onClick={() => {deleteAccount()}}
                     className="shadow border rounded-full mt-10 px-10 py-3 bg-red-800 text-slate-200 font-semibold hover:bg-red-700 hover:font-bold hover:text-white">
                         Delete Account
-                </button>
+                </button> */}
         </div>
     </div>
     )
     
-    function changeUsername(){
+    async function changeUsername(){
         let newUsername = prompt ("Put in your new username:");
         if (newUsername != "") {
-            data.username = newUsername;            
-            location.reload()
+            await axios.post("/api/users/update-user", {newUsername: newUsername, newEmail: null} );  
+            window.location.reload()
         }
     }
 
-    function changeEmail(){
+    async function changeEmail(){
         let newEmail = prompt ("Put in your new email:");
         if (newEmail != "") {
-            data.email = newEmail;            
-            location.reload()
+            await axios.post("/api/users/update-user", {newUsername: null, newEmail: newEmail} );   
+            window.location.reload()
         }
     }
     

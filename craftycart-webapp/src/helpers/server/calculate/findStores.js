@@ -28,6 +28,8 @@ export default async function findStores( list ) {
             name: store.get('name'),
             locationName: store.get('locationName'),
             address: store.get('address'),
+            lat: Number(store.get('lat')),
+            lng: Number(store.get('long')),
             total: 0,
             missing: 0,
             itemsFound: [],

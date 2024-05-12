@@ -18,12 +18,14 @@ export default function Nav() {
   }
 
   const logout = async () => {
-    try {
-      await axios.get("/api/users/logout");
-      router.push('/');
-      redirect("/")
-    } catch (error) {
-      console.log(error.message);
+    if (window.confirm("Log out of user account? All changes will be saved.")) {
+      try {
+        await axios.get("/api/users/logout");
+        router.push('/');
+        redirect("/")
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   }
 
@@ -70,8 +72,8 @@ export default function Nav() {
             <RegistrationButton name="Sign In" link="/account/login" />
             :
             <>
-              <UserName name={userData.username} />
-              <LogoutButton name="Logout" fn={logout} />
+              {/* <UserName name={userData.username} /> */}
+              <LogoutButton name="Logout" user={userData.username} fn={logout} />
             </>
           }
           {/* onClick={toggleDropdown} */}
@@ -153,20 +155,24 @@ function RegistrationButton({ name, link }) {
   );
 }
 
-function LogoutButton({ name, fn }) {
+function LogoutButton({ name, user, fn }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <button onClick={fn} className="text-white border-white inline-block text-base px-4 py-2 leading-none border rounded hover:border-transparent hover:[color:var(--dark-green)] hover:bg-white">
-      {name}
+    <button onClick={fn} 
+        className="text-white border-white inline-block text-base px-4 py-2 leading-none border rounded hover:border-transparent hover:[color:var(--dark-green)] hover:bg-white"
+        onMouseEnter={()=>setHovered(true)}
+        onMouseLeave={()=>setHovered(false)}>
+      {hovered ? name : user}
     </button>
 
   );
 }
 
 
-function UserName({ name }) {
-  return (
-    <a href="/account-settings" className="text-slate-100 inline-block text-lg px-1 py-1">
-      {name}
-    </a>
-  );
-}
+// function UserName({ name }) {
+//   return (
+//     <a href="/account-settings" className="text-slate-100 inline-block text-lg px-1 py-1">
+//       {name}
+//     </a>
+//   );
+// }

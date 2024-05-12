@@ -82,7 +82,7 @@ export default function TaskBar( {busySaving} ) {
                     } else {
                         console.log("wait for save");
                     }
-                }} text="Find Stores" imageAddr="/cart.svg" imageAlt="Find Stores" />
+                }} text="Find Stores" imageAddr="/store.svg" imageAlt="Find Stores" />
                 {/* <div className={`absolute w-auto p-2 mx-auto min-w-max bottom-16 -translate-x-1/4
                             rounded-md shadow-lg
                             text-white bg-green-800
