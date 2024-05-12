@@ -11,7 +11,7 @@ Project for CMPE 133. CraftyCart is a shopping list webapp that will find the ch
 
 ### Database setup
 - Install [MongoDB community server](https://www.mongodb.com/try/download/community) or open a mongodb atlas database.
-- Set uri in `.env` to MongoDB instance. If you are using the community server it should look like `MONGO_URI=mongodb://127.0.0.1/CraftyCart`
+- Set uri in `.env` to your MongoDB instance. If you are self-hosting using the community server it should look like `MONGO_URI=mongodb://127.0.0.1/CraftyCart`
 - The first time each collection is used there is often a delay or error as the collection is created locally. It is probably necessary to refresh the page to resolve these errors.
 - To load the database with example data download the following csv tables.
     - [CraftyCart-Example-Items.csv](https://drive.google.com/file/d/1JSn-Bdhq8upBAT2-w9prxiiPK4hqqfAD/view?usp=sharing)
