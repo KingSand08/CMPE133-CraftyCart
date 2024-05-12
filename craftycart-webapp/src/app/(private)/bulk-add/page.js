@@ -53,7 +53,7 @@ export default function BulkAdd() {
                             setPrev(JSON.stringify(data.message, null, 4))
                         })
                     } else {
-                        setPrev('Item creation failed. Received bad response from api.');
+                        setPrev('Upload failed. Received bad response from api.');
                     }
                 } catch (err) {
                     console.log(err.message)
