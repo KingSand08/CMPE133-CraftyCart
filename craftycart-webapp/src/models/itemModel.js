@@ -33,7 +33,8 @@ const itemSchema = new mongoose.Schema({
 })
 
 itemSchema.plugin(mongoose_fuzzy_searching, {
-    fields: ['name', 'brand', 'category', 'description']
+    fields: ['name']
+    //fields: ['name', 'brand', 'category', 'description']
 });
 
 const Item = mongoose.models.items || mongoose.model("items", itemSchema);
