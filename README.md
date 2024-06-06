@@ -8,7 +8,7 @@ Project for CMPE 133. CraftyCart is a shopping list webapp that will find the ch
 - Run `npm run dev` to host a development build or `npm run build` to compile a final build.
 - Navigate to [http://localhost:3000/](http://localhost:3000/) on your browser to view the hosted page.
 - set token in `.env` to a randomly generated security token. Should look like `TOKEN_SECRET=<token-here>` (without angle brackets).
-- The Google API key has been disabled for public use, when running a local copy replace the Google API key with your own.
+- The `Google API key` has been disabled for public use, when running a local copy replace the `Google API key` with your own.
 
 ### Database setup
 - Install [MongoDB community server](https://www.mongodb.com/try/download/community) or open a mongodb atlas database.
